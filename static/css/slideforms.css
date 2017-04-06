@@ -1,0 +1,213 @@
+
+
+.backBlack{
+	top:0px;
+	left:0px;
+	position: fixed;
+	width:100%;
+	height: 100%;
+	background: rgba(0,0,0,0.3);
+	z-index:111111;
+}
+.main-add-div{
+	width: 25%;
+	position: fixed;
+	background: white;
+	box-shadow: 0 0 10px rgba(0,0,0,0.4);
+	margin-left: 35%;
+	margin-right: 35%;
+	top:20%;
+	z-index:111112;
+	overflow: hidden;
+}
+	.add-busy-div{
+		width:100%;
+		text-align:right;
+	}
+	    .add-busy-div p {
+	        font-size:0.8em;
+			font-family: Roboto;
+			font-weight: bold;
+			text-shadow: 0 0 1px rgba(0,0,0,0.2);
+			color:gray !important;
+			margin-bottom: 15px !important;
+			margin-left: 20px !important;
+			text-align:left !important;
+	    }
+	    .add-busy-div p:hover{
+	        color:black !important;
+	    }
+
+        .add-busy-div .icon_before_input{
+            float:left;
+            width:15%;
+            text-align:center;
+			height: 50px;
+
+        }
+            .add-busy-div .icon_before_input i{
+                margin-top: 10px;
+            }
+
+
+		.add-busy-h1{
+			font-size:1em;
+			font-family: Roboto;
+			font-weight: bold;
+			text-shadow: 0 0 1px rgba(0,0,0,0.2);
+			color:black !important;
+			margin-top:20px !important;
+			margin-bottom: 15px !important;
+			margin-left: 5% !important;
+			margin-top: 10px;
+		}
+
+		.add-busy-div input, .add-busy-div select{
+			width:80%;
+			height: 50px;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding-left: 2%;
+			border:none;
+			color:rgba(0,0,0,0.7);
+			font-size:0.9em;
+			margin-right:5%;
+			transition: 1s;
+			font-family: Roboto;
+		}
+		.add-busy-div textarea{
+			width:80%;
+			height: 50px;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding-left: 2%;
+			border:none;
+			color:rgba(0,0,0,0.9);
+			font-size:0.8em;
+			margin-right:5%;
+			transition: 1s;
+			resize: none;
+			font-family: Roboto;
+		}
+		.add-busy-div input{
+			padding-top: 2px;
+			padding-bottom: 20px;
+		}
+		.add-busy-div input::-webkit-input-placeholder{
+		  	color:rgba(0,0,0,0.7);
+		  	font-size:0.9em;
+		}
+		.add-busy-div textarea::-webkit-input-placeholder{
+		  	color:rgba(0,0,0,0.7);
+		  	font-size:1em;
+		}
+
+		.add-busy-div select option{
+			font-size:0.9em;
+		}
+		.add-busy-div button{
+			background:none;
+			border:none;
+			color: #1c70e3;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			cursor: pointer;
+			text-transform: uppercase;
+			font-size:0.7em;
+			font-weight: bold;
+			margin-right:40px;
+		}
+
+		.add-busy-div .success{
+		    color:#74CD76;
+		    font-family: Roboto;
+		    float:left;
+		    margin-left:15px;
+		    margin-bottom:10px;
+		    font-size:0.7em;
+		    font-weight:bold;
+		}
+		.add-busy-div .error{
+		    color:#f00020;
+		    font-family: Roboto;
+		    float:left;
+		    margin-left:15px;
+		    margin-bottom:10px;
+		    font-size:0.7em;
+		    font-weight:bold;
+		}
+
+		.clickCss{
+			cursor: pointer;
+		}
+
+
+.editU.ng-hide-add{
+	transition: 0.5s;
+	opacity: 1;
+	transform: translate3d(0px,0px,0px);
+}
+.editU.ng-hide-add-active{
+	opacity: 0;
+	transform: translate3d(0px,-100px,500px);
+}
+.editU.ng-hide-remove{
+	transition: 0.5s;
+	opacity: 0;
+	transform: translate3d(0px,-100px,500px);
+}
+.editU.ng-hide-remove-active{
+	opacity: 1;
+	transform: translate3d(0px,0px,0px);
+}
+
+	.iconsettings-in-content{
+		text-align: right;
+	}
+		.iconsettings-in-content i{
+			color:rgba(0,0,0,0.5);
+			cursor: pointer;
+			margin-top:10px;
+			margin-right:10px;
+		}
+		.iconsettings-in-content i:hover{
+			color:black;
+		}
+
+.editM.ng-hide-add{
+	transition: 0.5s;
+	opacity: 1;
+	transform: translate3d(0px,0px,0px);
+}
+.editM.ng-hide-add-active{
+	opacity: 0;
+	transform: translate3d(0px,-100px,500px);
+}
+.editM.ng-hide-remove{
+	transition: 0.5s;
+	opacity: 0;
+	transform: translate3d(0px,-100px,500px);
+}
+.editM.ng-hide-remove-active{
+	opacity: 1;
+	transform: translate3d(0px,0px,0px);
+}
+
+.showPh.ng-hide-add{
+	transition: 0.5s;
+	opacity: 1;
+	transform: translate3d(0px,0px,0px);
+}
+.showPh.ng-hide-add-active{
+	opacity: 0.5;
+	transform: translate3d(100px,0px,500px);
+}
+.showPh.ng-hide-remove{
+	transition: 0.5s;
+	opacity: 0.5;
+	transform: translate3d(-100px,0px,500px);
+}
+.showPh.ng-hide-remove-active{
+	opacity: 1;
+	transform: translate3d(0px,0px,0px);
+}

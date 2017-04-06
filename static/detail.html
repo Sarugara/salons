@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html ng-app="salon">
+<head>
+	<!-- <base href="/" /> -->
+	<!-- SEO Optima -->
+	<link rel="stylesheet" type="text/css" href="css/salon.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+</head>
+<body ng-controller="divCtrl">
+
+
+
+
+
+	<header>
+
+		<div class="in-up-header-div">
+			<div class="in-up-header-in-left-div">
+				<div class="bar-icon-div">
+					<i class="fa fa-bars fa-2x" aria-hidden="true" ng-click="menuShowHide()"></i>
+				</div>
+				<h2>Салоны</h2>
+			</div>
+			<div class="in-up-header-in-center-div">
+				<i class="fa fa-search search-icon" aria-hidden="true"></i>
+				<input type="text" placeholder="Поиск" ng-model="name">
+			</div>
+			<div class="in-up-header-in-right-div">
+					<i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+			</div>
+		</div>
+
+	</header>
+
+	<div class="body-div">
+
+		<div ng-hide="showMenu" class="in-body-left-div">
+			<div class="in-up-body-in-left-div">
+				<div class="body-bar-h2-div">
+					<h2>Vide</h2>
+				</div>
+				<div class="body-bar-icon-div">
+					<i class="fa fa-chevron-left fa-2x" aria-hidden="true" ng-click="menuShowHide()"></i>
+				</div>
+			</div>
+			<div class="empty"></div>
+			<ul>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-home fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Главная</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-building fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div"><a href="#!/salons">Салоны</a></div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-hospital-o fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div"><a href="#!/clinic">Клиники</a></div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-leaf fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">SPA</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-users fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Мастера</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Тренировки</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-graduation-cap fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Курсы</div>
+				</li>
+			</ul>
+		</div>
+
+
+
+
+		<div class="profile-in-body-left-div">
+			<div class="blackShtor">
+
+			</div>
+			<div class="iconsettings">
+					<i ng-click="editUserFunc()" class="fa fa-cogs fa-2x" aria-hidden="true"></i>
+			</div>
+			<div class="profile-img-div">
+				<img src="img/back4.jpg">
+			</div>
+			<div class="profile-desc-div">
+				<h1>Название салона A7 Salon</h1>
+				<p>Description очень важно информативное описание салона для удобства клиентов, заинтересованных в ваших услугах.</p>
+			</div>
+			<div class="profile-contact-div">
+				<p>Время работы:</p>
+				<p>10:00 - 20:00, без выходных</p>
+			</div>
+			<div class="profile-contact-div">
+				<p>Адрес: <br> ТЦ Алмалы, 34, 3 этаж</p>
+				<br/>
+				<p>Телефоны: <br/> 8(707)522-65-90, 8(701)522-32-25, 8(777)132-56-21</p>
+				<br/>
+				<p class="profile-site"><a href="http://somesitesalons.kz" target="_blank">somesitesalons.kz</a></p>
+			</div>
+		</div>
+		<div class="in-body-right-div">
+
+
+			<div class="content-parti-div">
+				<div class="in-content-parti-div">
+					<div class="iconsettings-in-content">
+						<i ng-click="editMasterFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>
+					</div>
+					<h2>Мастера</h2>
+
+					<div class="in-content-parti-part">
+						<ul class="work-people">
+							<li>
+								<img src="img/back.jpg">
+								<h4>Мастер Анна</h4>
+								<p>Nail-стилист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back4.jpg">
+								<h4>Мастер Манна</h4>
+								<p>Визажист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back3.jpg">
+								<h4>Мастер Странно</h4>
+								<p>Парикмахер, стажа нет</p>
+							</li>
+							<li>
+								<img src="img/back2.jpg">
+								<h4>Мастер Моана</h4>
+								<p>Мореход</p>
+							</li>
+						</ul>
+					</div>
+
+					<p>Наши услуги самые крутые несмотря на то, что мировые конгломераты каждым днем пытаются нанести раковой удар по нашей репутации. Мы находимся в Казахстане, в одной из самых отстающих стран, в стране третьего мира, но весь мир нам завидует, потому что вода течет вверх, а боги устали писать историю!</p>
+				</div>
+			</div>
+
+
+			<div class="content-parti-div">
+				<div class="in-content-parti-div">
+					<div class="iconsettings-in-content">
+						<i ng-click="editWorkFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>
+					</div>
+					<h2>Работы</h2>
+
+					<div class="in-content-parti-part">
+						<ul class="work-people">
+							<li>
+								<img src="img/back2.jpg">
+								<h4>Мастер Анна</h4>
+								<p>Nail-стилист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back4.jpg">
+								<h4>Мастер Манна</h4>
+								<p>Визажист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back3.jpg">
+								<h4>Мастер Странно</h4>
+								<p>Парикмахер, стажа нет</p>
+							</li>
+							<li>
+								<img src="img/back5.jpg">
+								<h4>Мастер Моана</h4>
+								<p>Мореход</p>
+							</li>
+							<li>
+								<img src="img/back.jpg">
+								<h4>Мастер Анна</h4>
+								<p>Nail-стилист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back2.jpg">
+								<h4>Мастер Манна</h4>
+								<p>Визажист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back7.jpg">
+								<h4>Мастер Странно</h4>
+								<p>Парикмахер, стажа нет</p>
+							</li>
+							<li>
+								<img src="img/back4.jpg">
+								<h4>Мастер Моана</h4>
+								<p>Мореход</p>
+							</li>
+							<li>
+								<img src="img/back2.jpg">
+								<h4>Мастер Анна</h4>
+								<p>Nail-стилист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back3.jpg">
+								<h4>Мастер Манна</h4>
+								<p>Визажист, стаж 1 свет.лет</p>
+							</li>
+							<li>
+								<img src="img/back5.jpg">
+								<h4>Мастер Странно</h4>
+								<p>Парикмахер, стажа нет</p>
+							</li>
+							<li>
+								<img src="img/back2.jpg">
+								<h4>Мастер Моана</h4>
+								<p>Мореход</p>
+							</li>
+						</ul>
+					</div>
+
+					<p>Наши услуги самые крутые несмотря на то, что мировые конгломераты каждым днем пытаются нанести раковой удар по нашей репутации. Мы находимся в Казахстане, в одной из самых отстающих стран, в стране третьего мира, но весь мир нам завидует, потому что вода течет вверх, а боги устали писать историю!</p>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div class="content-block-div">
+				<div class="in-content-block-div">
+					<div class="iconsettings-in-content">
+						<i ng-click="editActionFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>
+					</div>
+					<h2>Акций</h2>
+
+					<div class="in-content-block-part">
+
+					</div>
+
+					<p>Наши услуги самые крутые несмотря на то, что мировые конгломераты каждым днем пытаются нанести раковой удар по нашей репутации. Мы находимся в Казахстане, в одной из самых отстающих стран, в стране третьего мира, но весь мир нам завидует, потому что вода течет вверх, а боги устали писать историю!</p>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div class="content-block-div">
+				<div class="in-content-block-div">
+					<div class="iconsettings-in-content">
+						<i ng-click="editServicesFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>
+					</div>
+					<h2>Услуги</h2>
+
+					<div class="in-content-block-part">
+						<ul class="content-services-ul">
+
+							<li>
+								<h3>Уход за волосами</h3>
+								<ul>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+								</ul>
+							</li>
+							<li>
+								<h3>Make up</h3>
+								<ul>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+								</ul>
+							</li>
+							<li>
+								<h3>Услуги ногтевого сервиса</h3>
+								<ul>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+								</ul>
+							</li>
+							<li>
+								<h3>Эпиляция</h3>
+								<ul>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+								</ul>
+							</li>
+							<li>
+								<h3>Массаж</h3>
+								<ul>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+								</ul>
+							</li>
+							<li>
+								<h3>Уход за волосами</h3>
+								<ul>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+									<li>Мужская стрижка - 2000</li>
+									<li>Стрижка наголо - 500</li>
+									<li>Детская стрижка - 800</li>
+									<li>Женская стрижка - 2500</li>
+									<li>Коррекция чёлки - 3500-4500</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+
+					<p>Наши услуги самые крутые несмотря на то, что мировые конгломераты каждым днем пытаются нанести раковой удар по нашей репутации. Мы находимся в Казахстане, в одной из самых отстающих стран, в стране третьего мира, но весь мир нам завидует, потому что вода течет вверх, а боги устали писать историю!</p>
+				</div>
+			</div>
+
+
+			<div class="main-add-div editU" ng-hide="editUser" >
+				<h1 class="add-busy-h1">Изменить</h1>
+
+				<div class="add-busy-div">
+
+					<input type="text" placeholder="Название" required>
+					<textarea placeholder="Описание" required></textarea>
+					<input type="text" placeholder="Контакты">
+					<input type="text" placeholder="Адрес">
+					<input type="text" placeholder="Сайт">
+					<button>Изменить</button>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editUser" class="backBlack"  ng-click="editUserFunc()">
+			</div>
+
+
+
+
+
+
+			<div class="main-add-div editM" ng-hide="editMaster" >
+				<h1 class="add-busy-h1">Изменить мастера</h1>
+
+				<div class="add-busy-div">
+
+					<input type="text" placeholder="Название" required>
+					<textarea placeholder="Описание" required></textarea>
+					<input type="text" placeholder="Контакты">
+					<input type="text" placeholder="Адрес">
+					<input type="text" placeholder="Сайт">
+					<button>Изменить</button>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editMaster" class="backBlack"  ng-click="editMasterFunc()">
+			</div>
+
+
+
+
+
+			<div class="main-add-div editM" ng-hide="editWork" >
+				<h1 class="add-busy-h1">Изменить работы</h1>
+
+				<div class="add-busy-div">
+
+					<input type="text" placeholder="Название" required>
+					<textarea placeholder="Описание" required></textarea>
+					<input type="text" placeholder="Контакты">
+					<input type="text" placeholder="Адрес">
+					<input type="text" placeholder="Сайт">
+					<button>Изменить</button>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editWork" class="backBlack"  ng-click="editWorkFunc()">
+			</div>
+
+
+
+			<div class="main-add-div editM" ng-hide="editAction" >
+				<h1 class="add-busy-h1">Изменить акций</h1>
+
+				<div class="add-busy-div">
+
+					<input type="text" placeholder="Название" required>
+					<textarea placeholder="Описание" required></textarea>
+					<input type="text" placeholder="Контакты">
+					<input type="text" placeholder="Адрес">
+					<input type="text" placeholder="Сайт">
+					<button>Изменить</button>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editAction" class="backBlack"  ng-click="editActionFunc()">
+			</div>
+
+
+			<div class="main-add-div editM" ng-hide="editServices" >
+				<h1 class="add-busy-h1">Изменить услуги</h1>
+
+				<div class="add-busy-div">
+
+					<input type="text" placeholder="Название" required>
+					<textarea placeholder="Описание" required></textarea>
+					<input type="text" placeholder="Контакты">
+					<input type="text" placeholder="Адрес">
+					<input type="text" placeholder="Сайт">
+					<button>Изменить</button>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editServices" class="backBlack"  ng-click="editServicesFunc()">
+			</div>
+
+
+			<!-- <ng-view></ng-view> -->
+
+		</div>
+
+	</div>
+
+
+	<footer>
+	</footer>
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/angular-animate.min.js"></script>
+	<script type="text/javascript" src="js/angular-route.min.js"></script>
+	<script type="text/javascript">
+		var salon = angular.module('salon', [ 'ngRoute', 'ngAnimate']);
+
+
+salon.controller('divCtrl', function($scope){
+
+    $scope.showMenu = true;
+    var toogle = false;
+    $scope.menuShowHide = function(){
+        $scope.showMenu = toogle;
+        toogle=!toogle;
+    }
+
+	$scope.editUser = true;
+	$scope.editUserFunc = function(){
+		$scope.editUser = !$scope.editUser;
+	}
+
+
+	$scope.editMaster = true;
+	$scope.editMasterFunc = function(){
+		$scope.editMaster = !$scope.editMaster;
+	}
+
+	$scope.editWork = true;
+	$scope.editWorkFunc = function(){
+		$scope.editWork = !$scope.editWork;
+	}
+
+	$scope.editAction = true;
+	$scope.editActionFunc = function(){
+		$scope.editAction = !$scope.editAction;
+	}
+
+	$scope.editServices = true;
+	$scope.editServicesFunc = function(){
+		$scope.editServices = !$scope.editServices;
+	}
+
+
+
+
+
+});
+
+
+
+
+
+
+	</script>
+
+
+</body>
+</html>

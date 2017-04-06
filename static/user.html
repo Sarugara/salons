@@ -1,0 +1,103 @@
+            <div ng-if="yesItsMe" class="content-parti-div">
+				<div class="in-content-parti-div">
+					<!--<div class="iconsettings-in-content">-->
+						<!--<i ng-click="editWorkFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>-->
+					<!--</div>-->
+					<h2>Любимые заведения</h2>
+					<div class="in-content-parti-part">
+						<ul ng-if="ArrFavSalons" class="work-people">
+							<li ng-repeat="salon in ArrFavSalons ">
+
+									<div ng-if="myBusy" class="div_settings_ang">
+										<i ng-click="deleteFavSalon(salon.salon_contact)" class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+									</div>
+								<a href="http://localhost:8000/salons/sal/[[salon.pk]]/">
+									<div class="divimg">
+										<img ng-src="[[salon.salon_logo]]">
+									</div>
+
+									<p>[[salon.name]]</p>
+									<p>[[salon.salon_desc]]</p>
+								</a>
+							</li>
+						</ul>
+
+						<p ng-if="NotArrFavSalons"> У вас нет любимых заведений </p>
+					</div>
+
+
+				</div>
+			</div>
+
+			<!--<div ng-if="yesItsMe" class="content-parti-div">
+				<div class="in-content-parti-div">
+					<h2>Любимые мастера</h2>
+					<div class="in-content-parti-part">
+						<ul ng-if="ArrFavMasters" class="work-people">
+							<li ng-repeat="master in favmasters">
+
+									<div ng-if="myBusy" class="div_settings_ang">
+										<i ng-click="deleteFavMaster(master.pk, master.wholoveit)" class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+									</div>
+								<a href="http://localhost:8000/salons/profile/[[master.master_pk]]/#!/master">
+									<div class="divimg">
+										<img ng-src="[[master.avatar]]">
+									</div>
+
+									<p>[[master.name]]</p>
+								</a>
+							</li>
+						</ul>
+
+						<p ng-if="NotArrFavMasters"> У вас нет любимых мастеров </p>
+					</div>
+
+
+				</div>
+			</div>-->
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="deletefavsalon" >
+				<h1 class="add-busy-h1">Подтвердите действие</h1>
+
+				<div class="add-busy-div">
+
+					<button  ng-click="deleteFavSalon()">Отмена</button>
+					<button ng_click="upload_delete_favsalon()">Удалить</button>
+					<p ng-if="success_deletefavsalon" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Вы больше не любите это заведение</p>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="deletefavsalon" class="backBlack"  ng-click="deleteFavSalon()">
+			</div>
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="deletefavmaster" >
+				<h1 class="add-busy-h1">Подтвердите действие</h1>
+
+				<div class="add-busy-div">
+					<div align="right">
+						<button  ng-click="deleteFavMaster()">Отмена</button>
+						<button ng_click="upload_delete_favmaster()">Удалить</button>
+					</div>
+					<p ng-if="success_deletefavmaster" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Вы больше не любите этого мастера</p>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="deletefavmaster" class="backBlack"  ng-click="deleteFavMaster()">
+			</div>
+

@@ -1,0 +1,18 @@
+
+			<h1>Лучшие салоны</h1>
+
+			<div class="in-body-part-div" ng-repeat="salon in bestsalons | filter:name">
+                <a href="http://localhost:8000/salons/sal/{{salon.pk}}/">
+                    <div class="in-body-part-img-div">
+                        <img src="{{salon.salon_logo}}">
+                    </div>
+                    <div class="in-body-part-desc-div">
+                        <h3>{{salon.salon_name}}</h3>
+                        <p>{{salon.salon_desc}}</p>
+                        <p>{{salon.salon_adress}}</p>
+                    </div>
+                    <div class="in-body-part-action-div">
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+			</div>

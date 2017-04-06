@@ -1,0 +1,16 @@
+
+			<h1>Мастера</h1>
+			<div class="in-body-part-div" ng-repeat="master in mastersArr | filter:search">
+                <a href="http://localhost:8000/salons/profile/[[master.pk]]/#!/master">
+                    <div class="in-body-part-img-div">
+                        <img ng-src="[[master.avatar]]">
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[master.color]]">
+                        <h3>[[master.first_name]] [[master.last_name]]</h3>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+			</div>
+
+
+

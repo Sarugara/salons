@@ -1,0 +1,1702 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<!-- <base href="/" /> -->
+	<!-- SEO Optima -->
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/slideforms.css' %}">
+</head>
+<body ng-controller="divCtrl">
+
+	<header>
+
+		<div class="in-up-header-div">
+			<div class="in-up-header-in-left-div">
+				<div class="bar-icon-div">
+					<i class="fa fa-bars fa-2x" aria-hidden="true" ng-click="menuShowHide()"></i>
+				</div>
+				<div class="PreSearchTitle">
+					<h2>Салоны</h2>
+				</div>
+				<div class="MySearch">
+					<select ng-click="setCity()" ng-init="search.city=abc" ng-model="search.city">
+							<option value="">Выберите город...</option>
+							<option value="2">Алматы</option>
+							<option value="1">Астана</option>
+					</select>
+				</div>
+			</div>
+			<div class="in-up-header-in-center-div">
+				<form ng-submit="startSearch()">
+					<i class="fa fa-search search-icon" aria-hidden="true"></i>
+					<input type="text" placeholder="Поиск" ng-model="why">
+					<input style="opacity:0;" type="submit">
+				</form>
+			</div>
+			<div class="in-up-header-in-right-div">
+					<i ng-if="outHome" ng-click="AuthReg()" class="fa fa-user-circle-o fa-2x clickable" aria-hidden="true"></i>
+					<span ng-if="inHome" class="usernameInTop">[[decoUsername]]</span>
+					<a ng-if="inHome" href="http://localhost:8000/salons/profile/[[usersPk]]"><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i></a>
+					&nbsp;
+					<a ng-if="inHome" href="http://localhost:8000/salons/profile/[[usersPk]]#!/feed"><i class="fa fa-bell fa-2x" aria-hidden="true"></i><span ng-if="newsCount" class="newsHeader">[[newsCount]]</span></a>
+					&nbsp;
+					<i ng-if="inHome" ng-click="Logout()" class="fa fa-sign-out fa-2x clickable" aria-hidden="true"></i>
+			</div>
+		</div>
+
+		<div class="in-down-header-div" ng-controller="ChangeTypeCtrl">
+			<ul class="{{cssclass}}">
+				<a href="#!/">
+					<li class="typechange1" ng-click="active=true;cssclass='typechange1'">
+						Лучшие салоны
+					</li></a>
+				<a href="#!/services">
+					<li class="typechange2" ng-click="active=true;cssclass='typechange2'">
+						Услуги
+					</li>
+				</a>
+				<!--<a href="#!/masters">
+					<li class="typechange5" ng-click="active=true;cssclass='typechange5'">
+						Мастера
+					</li>
+				</a>-->
+				<a href="#!/workssalons">
+					<li class="typechange3" ng-click="active=true;cssclass='typechange3'">
+						Работы салонов
+					</li>
+				</a>
+			</ul>
+		</div>
+
+	</header>
+
+	<div class="body-div">
+
+		<div ng-hide="showMenu" class="in-body-left-div">
+			<ul>
+				<a href="http://localhost:8000/salons/sal#!/">
+					<li>
+						<div class="in-body-left-icon-div"><i class="fa fa-building fa-2x" aria-hidden="true"></i></div>
+						<div class="in-body-left-text-div">Лучшие салоны</div>
+					</li>
+				</a>
+				<a href="http://localhost:8000/salons/sal#!/services">
+					<li>
+						<div class="in-body-left-icon-div"><i class="fa fa-hospital-o fa-2x" aria-hidden="true"></i></div>
+						<div class="in-body-left-text-div">Услуги</div>
+					</li>
+				</a>
+				<a href="http://localhost:8000/salons/sal#!/workssalons">
+					<li>
+						<div class="in-body-left-icon-div"><i class="fa fa-leaf fa-2x" aria-hidden="true"></i></div>
+						<div class="in-body-left-text-div">Работы салонов</div>
+					</li>
+				</a>
+			</ul>
+		</div>
+		<div extends class="in-body-right-div">
+
+
+			<ng-view></ng-view>
+
+		</div>
+
+	</div>
+
+
+	<footer>
+	</footer>
+
+
+
+
+
+
+			<div  class="main-add-div editU" ng-hide="authReg" >
+				<h1 class="add-busy-h1">Вход</h1>
+
+				<div class="add-busy-div">
+
+					<div align="right">
+						<p style="color:#f00040;" ng-if="error_whith_login">[[error_whith_login]]</p>
+					</div>
+
+					<form ng-submit="come_in()">
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Логин" ng-model="username" required>
+						<div class="icon_before_input">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" placeholder="Пароль" ng-model="password" required>
+						<button type="submit">Войти</button>
+					</form>
+					<p ng-click="Reg()" class="clickable">зарегистрироваться</p>
+
+
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="authReg" class="backBlack"  ng-click="AuthReg()">
+			</div>
+
+
+
+
+
+
+
+
+			<div  class="main-add-div editU" ng-hide="reg" >
+				<h1 class="add-busy-h1">Регистрация</h1>
+
+				<div class="add-busy-div">
+
+
+					<div align="right">
+						<p style="color:#f00040;" ng-if="error_with_register">[[error_with_register]]</p>
+					</div>
+
+
+
+					<form ng-submit="reg_in()">
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Логин" ng-model="username" required>
+						<div class="icon_before_input">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" placeholder="Email" ng-model="email" required>
+						<div class="icon_before_input">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" placeholder="Пароль" ng-model="password" required>
+						<div class="icon_before_input">
+							<i class="fa fa-unlock-alt" aria-hidden="true"></i>
+						</div>
+						<input type="password" placeholder="Повторите пароль" ng-model="repassword" required>
+						<button type="submit">Зарегистрироваться</button>
+					</form>
+
+				</div>
+			</div>
+
+			<div ng-hide="reg" class="backBlack"  ng-click="Reg()">
+			</div>
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="{% static 'js/angular.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-route.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-animate.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-cookies.min.js' %}"></script>
+
+	<script type="text/javascript">
+
+
+
+
+
+
+var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngCookies'],  $rootScopeProvider => {
+  $rootScopeProvider.digestTtl(14);
+});
+
+
+app.config(function($routeProvider, $httpProvider, $interpolateProvider, $qProvider){
+
+	$interpolateProvider.startSymbol('[[').endSymbol(']]');
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+	/*$locationProvider.html5Mode(true);*/
+
+	$routeProvider
+	.when('/', {
+		templateUrl: '../static/salons.html',
+		controller: 'SalonsCtrl'
+	})
+/*	.when('/masters', {
+		templateUrl: '../static/masters.html',
+		controller: 'MastersCtrl'
+	})
+*/
+	.when('/services', {
+		templateUrl: '../static/services.html',
+		controller: 'ServicesSalonsCtrl'
+	})
+	.when('/workssalons', {
+		templateUrl: '../static/works.html',
+		controller: 'WorksSalonsCtrl'
+	})
+	.when('/search/:why', {
+		templateUrl: '../static/search.html',
+		controller: 'SearchCtrl'
+	})
+});
+
+
+
+app.directive('extends', function($animate) {
+        return {
+            link: function (scope, elem, attrs) {
+            	scope.addExtends = function(){
+            		var self = angular.element(elem);
+                    $animate.addClass(self, 'in-body-right-div-active', function () {
+                    });
+            	}
+            	scope.removeExtends = function(){
+            		var self = angular.element(elem);
+                    self.removeClass('in-body-right-div-active');
+            	}
+
+            }
+        };
+});
+
+app.directive('changetype', ['$animate',
+    function ($animate) {
+        return {
+            link: function (scope, elem, attrs) {
+            	scope.cl = function(){
+            		var self = angular.element(elem);
+                    $animate.addClass(self, 'bottomline', function () {
+
+                    });
+            	}
+/*                elem.on('click', function () {
+                    var self = angular.element(this);
+                    $animate.addClass(self, 'bottomline', function () {
+                        self.removeClass('bottomline');
+                    });
+                });*/
+            }
+        };
+}]);
+
+
+
+
+app.controller('SearchCtrl', function($scope, $http, $timeout, $cookies, $window, $routeParams, $interval){
+
+		$scope.why = $routeParams.why;
+
+
+
+
+	$scope.enterSlideShow = function(salon, all){
+		var itemPhoto=0;
+		pavels = $interval( function(){
+		if(all!=0){
+			salon.avavisible=true;
+			for(var i=0; i<all.length;i++){
+				all[i].visible=true;
+			}
+			all[itemPhoto].visible=false;
+			itemPhoto++;
+			if(itemPhoto==all.length){
+				itemPhoto=0;
+			}
+		}
+	 }, 800);
+	}
+	$scope.stopSlide = function(smthobj, all){
+		$interval.cancel(pavels);
+		for(var i=0; i<all.length;i++){
+	 		all[i].visible=true;
+	 		all[0].visible=false;
+	 	}
+	}
+
+
+
+
+
+	$http.get('http://localhost:8000/salons/api/services/?format=json')
+                .then(function successCallback(response1) {
+
+					if(response1.data.length!=0){
+
+
+						for(var m=0;m<response1.data.length;m++){
+							$http.get('http://localhost:8000/salons/api/saloncat?format=json')
+							.then(function successCallback(response2) {
+								for(var i=0;i<response1.data.length;i++){
+									for(var j=0;j<response2.data.length;j++){
+										if(response1.data[i].service==response2.data[j].pk){
+											response1.data[i].name = response2.data[j].service_name;
+										}
+									}
+								}
+							  }, function errorCallback(response2) {
+								console.log('Error respond');
+							  });
+
+
+								$http.get('http://localhost:8000/salons/api/selfmasterservices?format=json')
+								.then(function successCallback(response2) {
+									for(var i=0;i<response2.data.length;i++){
+										for(var j=0;j<response2.data[i].master_services.length;j++){
+											for(var n=0;n<response1.data.length;n++){
+												if(response1.data[n].pk==response2.data[i].master_services[j]){
+													response1.data[n].master=response2.data[i].pk;
+													response1.data[n].master_user=response2.data[i].master_author;
+													response1.data[n].city=response2.data[i].city;
+												}
+											}
+										}
+
+
+
+										$http.get('http://localhost:8000/salons/api/selfmasterservices/'+response2.data[i].pk+'/?format=json')
+																.then(function successCallback(response9) {
+
+
+																	for(var j=0;j<response9.data.master_services.length;j++){
+																		for(var q=0;q<response1.data.length;q++){
+																			if(response1.data[q].pk==response9.data.master_services[j]){
+
+																				$http.get('http://localhost:8000/salons/api/userlogo/list/'+response9.data.master_author+'/?format=json')
+																					.then(function successCallback(response10) {
+																						$scope.avatarOfMaster = response10.data[0].avatar;
+																				  }, function errorCallback(response2) {
+																					console.log('Error respond');
+																				  });
+
+
+																				response1.data[q].avatar = $scope.avatarOfMaster;
+
+																			}
+																		}
+																	}
+
+
+															  }, function errorCallback(response2) {
+																console.log('Error respond');
+															  });
+
+
+
+
+
+									}
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+								$http.get('http://localhost:8000/salons/api/salonservices?format=json')
+								.then(function successCallback(response2) {
+									console.log(response2.data);
+									for(var i=0;i<response2.data.length;i++){
+										for(var j=0;j<response2.data[i].salon_services.length;j++){
+											for(var n=0;n<response1.data.length;n++){
+												if(response1.data[n].pk==response2.data[i].salon_services[j]){
+													response1.data[n].salon=response2.data[i].pk;
+													response1.data[n].city=response2.data[i].city;
+												}
+											}
+										}
+
+
+										$http.get('http://localhost:8000/salons/api/sal/'+response2.data[i].pk+'/?format=json')
+																.then(function successCallback(response9) {
+																	for(var j=0;j<response9.data.salon_services.length;j++){
+																		for(var q=0;q<response1.data.length;q++){
+																			if(response1.data[q].pk==response9.data.salon_services[j]){
+																				response1.data[q].salon_logo = response9.data.salon_logo;
+																			}
+																		}
+																	}
+
+															  }, function errorCallback(response2) {
+																console.log('Error respond');
+															  });
+
+
+									}
+
+
+
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+								for(var i=0;i<response1.data.length;i++){
+									response1.data[i].works =[];
+								}
+
+								$http.get('http://localhost:8000/salons/api/getsalonworks?format=json')
+								.then(function successCallback(response2) {
+									for(var i=0;i<response2.data.length;i++){
+										for(var n=0;n<response1.data.length;n++){
+											if(response2.data[i].salon==response1.data[n].salon){
+												for(var j=0;j<response2.data[i].work_service.length;j++){
+													if(response1.data[n].service==response2.data[i].work_service[j]){
+														var a = {};
+														a.visible = true;
+														a.work_logo = response2.data[i].work_logo;
+														response1.data[n].works.push(a);
+														response1.data[n].works[0].visible = false;
+													}
+												}
+											}
+										}
+									}
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+								$http.get('http://localhost:8000/salons/api/getselfworks?format=json')
+								.then(function successCallback(response2) {
+
+
+									for(var i=0;i<response2.data.length;i++){
+										for(var n=0;n<response1.data.length;n++){
+											if(response2.data[i].master==response1.data[n].master){
+													if(response1.data[n].service==response2.data[i].work_service){
+														var a = {};
+														a.visible = true;
+														a.work_logo = response2.data[i].work_logo;
+														response1.data[n].works.push(a);
+														response1.data[n].works[0].visible = false;
+													}
+											}
+										}
+									}
+
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+
+
+								for(var i=0;i<response1.data.length;i++){
+									response1.data[i].color = Math.floor((Math.random()*14)+1);
+								}
+
+
+
+
+
+						}
+
+
+						$scope.ServicesArr = response1.data;
+						console.log($scope.ServicesArr);
+					}
+                  }, function errorCallback(response1) {
+                    console.log('Error respond');
+                  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//SALONS
+
+			$http.get('http://localhost:8000/salons/api/all/?format=json')
+                .then(function successCallback(response) {
+                	for(var i=0;i<response.data.length;i++){
+						response.data[i].color = Math.floor((Math.random()*14)+1)
+					}
+
+
+
+
+					//get salon values
+						for(var i=0;i<response.data.length;i++){
+							$http.get('http://localhost:8000/salons/api/salonsvalues/'+response.data[i].pk+'?format=json')
+								.then(function successCallback(response2) {
+									console.log("Get Values");
+									console.log(response2);
+									for(var i=0;i<response.data.length;i++){
+										if(response.data[i].pk==response2.data[0].salon){
+											response.data[i].values = response2.data[0].sumvalue;
+										}
+										$scope.OldsumvalueVal = [
+										{value: 1, hover: false},
+										{value: 2, hover: false},
+										{value: 3, hover: false},
+										{value: 4, hover: false},
+										{value: 5, hover: false}
+										]
+
+										for(var j=0; j<response.data[i].values;j++){
+											$scope.OldsumvalueVal[j].hover=true;
+											var id=j+1;
+											angular.element(document.querySelector("#OldstarOne"+id)).removeClass("fa-star-o");
+										}
+
+									}
+
+
+								  }, function errorCallback(response) {
+									console.log('Error respond');
+								  });
+						}
+
+
+
+
+
+
+					console.log('Photos from photos');
+                    console.log(response.data)
+						$http.get('http://localhost:8000/salons/api/salonphotos/?format=json')
+									.then(function successCallback(response2) {
+										for(var j=0; j<response2.data.length;j++){
+											response2.data[j].visible = true;
+										}
+										console.log(response2.data);
+										console.log(response.data);
+										for(var i=0; i<response.data.length; i++){
+											response.data[i].avavisible = false;
+											response.data[i].photos=[];
+											for(var j=0; j<response.data[i].salon_photos.length; j++){
+												for(var n=0; n<response2.data.length; n++){
+													if(response.data[i].salon_photos[j]==response2.data[n].pk){
+														response.data[i].photos.push(response2.data[n]);
+													}
+												}
+											}
+										}
+									}, function errorCallback(response) {
+										console.log('Error respond');
+									});
+						$http.get('http://localhost:8000/salons/api/salonfeedback/?format=json')
+									.then(function successCallback(response2) {
+										for(var j=0; j<response2.data.length;j++){
+											response2.data[j].visible = true;
+										}
+										console.log("Start feedbacks");
+										console.log(response2.data);
+										console.log(response.data);
+										for(var i=0; i<response.data.length; i++){
+											response.data[i].feedbacks=[];
+											for(var j=0; j<response.data[i].salon_feedback.length; j++){
+												for(var n=0; n<response2.data.length; n++){
+													if(response.data[i].salon_feedback[j]==response2.data[n].pk){
+														response.data[i].feedbacks.push(response2.data[n]);
+													}
+												}
+											}
+										}
+
+										for(var p=0;p<response.data.length;p++){
+											for(var q=0;q<response.data[p].feedbacks.length;q++){
+												response.data[p].feedbacks[0].visible = false;
+											}
+										}
+
+										console.log(response.data);
+										console.log("End feedbacks");
+									}, function errorCallback(response) {
+										console.log('Error respond');
+									});
+					console.log("End response");
+					console.log(response.data);
+					$scope.bestsalons = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+	$scope.enterSlideShowSal = function(salon, all, feedbacks){
+		var itemPhoto=0;
+		var itemFeed=0;
+		pavels1 = $interval( function(){
+			if(all!=0){
+				salon.avavisible=true;
+				for(var i=0; i<all.length;i++){
+					all[i].visible=true;
+				}
+				all[itemPhoto].visible=false;
+				itemPhoto++;
+				if(itemPhoto==all.length){
+					salon.avavisible=false;
+					itemPhoto=0;
+				}
+			}
+	 	}, 800);
+
+
+	 	pavels2 = $interval( function(){
+			if(feedbacks!=0){
+				for(var j=0; j<feedbacks.length;j++){
+					feedbacks[j].visible=true;
+				}
+				feedbacks[itemFeed].visible=false;
+				itemFeed++;
+				if(itemFeed==feedbacks.length){
+					itemFeed=0;
+				}
+			}
+	 	}, 900);
+
+	}
+	$scope.stopSlideSal = function(smthobj, all, feedbacks){
+		$interval.cancel(pavels1);
+		$interval.cancel(pavels2);
+		for(var i=0; i<all.length;i++){
+	 		all[i].visible=true;
+	 	}
+	 	for(var i=0; i<feedbacks.length;i++){
+	 		feedbacks[i].visible=true;
+	 		feedbacks[0].visible=false;
+	 	}
+		smthobj.avavisible=false;
+	}
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.controller('divCtrl', function($scope, $http, $timeout, $cookies, $window, $interval){
+
+
+			if($cookies.get('city')){
+				$scope.abc=$cookies.get('city');
+			}
+
+			$scope.setCity = function(){
+				var i=0;
+				pavels = $interval( function(){
+					console.log($scope.search.city);
+					$cookies.remove('city');
+					$cookies.put('city', $scope.search.city);
+					if(i==5){
+						$scope.stopInt(pavels);
+					}
+					i++;
+				}, 1000);
+			}
+			$scope.stopInt = function(pavels){
+				$interval.cancel(pavels);
+			}
+
+			$scope.startSearch = function(){
+				if($scope.why){
+					$window.location.href = 'http://localhost:8000/salons/sal#!/search/'+$scope.why;
+				}
+			}
+
+
+
+			//Count of feed
+			$scope.GetCountFeed = function () {
+        	$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+				'Authorization': $cookies.get('token')}
+				}).then(function successCallback(responseSalon) {
+							$scope.newsCount = 0;
+							for(var i=0;i<responseSalon.data.length;i++){
+								for(var j=0;j<responseSalon.data[i].salon_book.length;j++){
+									$http({method: 'GET', url: 'http://localhost:8000/salons/api/salonbook/'+responseSalon.data[i].salon_book[j]+'/?format=json', headers: {
+									'Authorization': $cookies.get('token')}
+									}).then(function successCallback(response) {
+												$scope.newsCount += response.data.flag;
+											  }, function errorCallback(response) {
+												console.log('Error respond');
+											  });
+								}
+							}
+						  }, function errorCallback(response) {
+							console.log('Error respond');
+						  });
+			}
+
+
+
+
+
+
+
+
+
+
+
+	// reg in
+
+	$scope.reg_in = function(){
+
+
+        var postdata = {
+			username: $scope.username,
+			email: $scope.email,
+			password: $scope.password,
+			repassword: $scope.repassword
+		}
+
+
+		$http({
+              url: 'http://127.0.0.1:8000/salons/api/register/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+				console.log(response)
+
+				$http.get('http://localhost:8000/salons/api/usergetpk/'+$scope.username+'?format=json')
+                .then(function successCallback(response) {
+                	$scope.pkdata = response.data[0].pk;
+
+                	var profiledata = {
+						pk: $scope.pkdata,
+						user: $scope.pkdata
+					}
+
+					 $http({
+						  url: 'http://localhost:8000/salons/api/postprofile/post/',
+						  method: 'POST',
+						  data: profiledata,
+						  contentType:'application/json'
+						}).then(function successCallback(response) {
+
+							console.log(response);
+						}, function errorCallback(response) {
+							console.log(response);
+						});
+
+
+                  }, function errorCallback(response){
+
+                    console.log('Error respond');
+
+                  });
+
+
+
+
+				$scope.come_in();
+
+
+
+            }, function errorCallback(response) {
+            	if(response.data.username){
+            		$scope.error_with_register = response.data.username[0];
+            	}
+            	if(response.data.repassword){
+            		$scope.error_with_register = response.data.repassword[0];
+            	}
+            	if(response.data.non_field_errors){
+					$scope.error_with_register = response.data.non_field_errors[0];
+				}
+                console.log(response);
+            });
+	}
+
+
+
+	// user login
+	$scope.come_in = function(){
+
+
+        var postdata = {
+			username: $scope.username,
+			password: $scope.password
+		}
+
+
+		$http({
+              url: 'http://127.0.0.1:8000/salons/api-token-auth/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+
+            	$http.get('http://localhost:8000/salons/api/usergetpk/'+$scope.username+'?format=json')
+                .then(function successCallback(response) {
+                	$cookies.put('pk', response.data[0].pk, {path: '/'});
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+
+                 var token = response.data.token;
+                 $cookies.put('username', $scope.username, {path: '/'});
+                 $cookies.put('token', token, {path: '/'});
+
+                 $timeout( function(){ $scope.AuthReg(); }, 100);
+
+                 $timeout( function(){  $scope.toBeOrNotToBe(); }, 200);
+                 $timeout( function(){ $scope.getSalon(); }, 200);
+
+				$scope.username = null;
+				$scope.password = null;
+
+                $timeout( function(){
+                 	$window.location.href = 'http://localhost:8000/salons/profile/'+$cookies.get('pk');
+                }, 500);
+
+
+            }, function errorCallback(response) {
+            	if(response.data.non_field_errors[0]=="Unable to login with provided credentials."){
+            		$scope.error_whith_login = "неверный логин или пароль";
+            	}
+                console.log(response.data.non_field_errors);
+            });
+	}
+
+	// Logout
+
+	$scope.Logout = function(){
+		 $cookies.remove('username', {path: '/'});
+         $cookies.remove('token', {path: '/'});
+         $cookies.remove('pk', {path: '/'});
+         $timeout( function(){  $scope.toBeOrNotToBe(); }, 200);
+         $timeout( function(){ $scope.getSalon(); }, 200);
+
+         $timeout( function(){
+                 	$window.location.reload();
+          }, 500);
+	}
+
+
+
+
+
+
+
+	$scope.authReg = true;
+	$scope.AuthReg = function(){
+		$scope.authReg = !$scope.authReg;
+	}
+
+	$scope.reg = true;
+	$scope.Reg = function(){
+		$scope.reg = !$scope.reg;
+	}
+
+
+
+
+
+
+
+	$scope.toBeOrNotToBe = function(){
+		var yes = $cookies.get('token');
+		if(yes){
+			$scope.inHome=true;
+			$scope.outHome=false;
+			$scope.decoUsername = $cookies.get('username');
+			$scope.usersPk = $cookies.get('pk');
+		}else{
+			$scope.inHome=false;
+			$scope.outHome=true;
+		}
+	}
+
+
+	$scope.toBeOrNotToBe();
+
+
+	$scope.showMenu = false;
+	var toogle = true;
+	$scope.menuShowHide = function(){
+		$scope.YesWideShadow = true;
+		$scope.showMenu = toogle;
+		toogle=!toogle;
+		if($scope.showMenu){
+			$scope.addExtends();
+		}else{
+			$scope.removeExtends();
+		}
+	}
+});
+
+
+app.controller('ChangeTypeCtrl', function($scope){
+	$scope.cssclass = "typechange1";
+});
+
+
+app.controller('SalonsCtrl', function($scope, $http, $interval, $cookies){
+
+	$scope.search.service = undefined;
+	$scope.search.cat = undefined;
+
+	$scope.arrayA = [{count:1, name:'f1'}, {count:2, name:'f2'}, {count:3, name:'f3'}, {count:4, name:'f4'}];
+
+	$http.get('http://localhost:8000/salons/api/all/?format=json')
+                .then(function successCallback(response) {
+                	for(var i=0;i<response.data.length;i++){
+						response.data[i].color = Math.floor((Math.random()*14)+1);
+					}
+
+
+
+						//get salon values
+						for(var i=0;i<response.data.length;i++){
+							$http.get('http://localhost:8000/salons/api/salonsvalues/'+response.data[i].pk+'?format=json')
+								.then(function successCallback(response2) {
+									console.log("Get Values");
+									if(response2.data[0]){
+										for(var p=0;p<response.data.length;p++){
+											if(response.data[p].pk==response2.data[0].salon){
+												response.data[p].values = response2.data[0].sumvalue;
+												response.data[p].OldsumvalueVal = [
+													{value: 1, hover: false},
+													{value: 2, hover: false},
+													{value: 3, hover: false},
+													{value: 4, hover: false},
+													{value: 5, hover: false}
+												];
+
+													for(var j=0; j<response.data[p].values;j++){
+														response.data[p].OldsumvalueVal[j].hover=true;
+														var id=j+1;
+														angular.element(document.querySelector("#OldstarThree"+id)).removeClass("fa-star-o");
+													}
+
+											}
+
+										}
+									}
+
+
+									console.log(response.data);
+
+								  }, function errorCallback(response) {
+									console.log('Error respond');
+								  });
+						}
+
+
+						//get salon photos
+						$http.get('http://localhost:8000/salons/api/salonphotos/?format=json')
+									.then(function successCallback(response2) {
+										for(var j=0; j<response2.data.length;j++){
+											response2.data[j].visible = true;
+										}
+										console.log(response2.data);
+										console.log(response.data);
+										for(var i=0; i<response.data.length; i++){
+											response.data[i].avavisible = false;
+											response.data[i].photos=[];
+											for(var j=0; j<response.data[i].salon_photos.length; j++){
+												for(var n=0; n<response2.data.length; n++){
+													if(response.data[i].salon_photos[j]==response2.data[n].pk){
+														response.data[i].photos.push(response2.data[n]);
+													}
+												}
+											}
+										}
+									}, function errorCallback(response) {
+										console.log('Error respond');
+									});
+
+
+						//get salon feedbacks
+						$http.get('http://localhost:8000/salons/api/salonfeedback/?format=json')
+									.then(function successCallback(response2) {
+										for(var j=0; j<response2.data.length;j++){
+											response2.data[j].visible = true;
+										}
+										console.log("Start feedbacks");
+										console.log(response2.data);
+										console.log(response.data);
+										for(var i=0; i<response.data.length; i++){
+											response.data[i].feedbacks=[];
+											for(var j=0; j<response.data[i].salon_feedback.length; j++){
+												for(var n=0; n<response2.data.length; n++){
+													if(response.data[i].salon_feedback[j]==response2.data[n].pk){
+														response.data[i].feedbacks.push(response2.data[n]);
+													}
+												}
+											}
+										}
+
+										for(var p=0;p<response.data.length;p++){
+											for(var q=0;q<response.data[p].feedbacks.length;q++){
+												response.data[p].feedbacks[0].visible = false;
+											}
+										}
+
+										console.log(response.data);
+										console.log("End feedbacks");
+									}, function errorCallback(response) {
+										console.log('Error respond');
+									});
+					console.log("End response");
+					console.log(response.data);
+					$scope.bestsalons = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+	$scope.enterSlideShow = function(salon, all, feedbacks){
+		var itemPhoto=0;
+		var itemFeed=0;
+		pavels1 = $interval( function(){
+			if(all!=0){
+				salon.avavisible=true;
+				for(var i=0; i<all.length;i++){
+					all[i].visible=true;
+				}
+				all[itemPhoto].visible=false;
+				itemPhoto++;
+				if(itemPhoto==all.length){
+					salon.avavisible=false;
+					itemPhoto=0;
+				}
+			}
+	 	}, 800);
+
+
+	 	pavels2 = $interval( function(){
+			if(feedbacks!=0){
+				for(var j=0; j<feedbacks.length;j++){
+					feedbacks[j].visible=true;
+				}
+				feedbacks[itemFeed].visible=false;
+				itemFeed++;
+				if(itemFeed==feedbacks.length){
+					itemFeed=0;
+				}
+			}
+	 	}, 900);
+
+	}
+	$scope.stopSlide = function(smthobj, all, feedbacks){
+		$interval.cancel(pavels1);
+		$interval.cancel(pavels2);
+		for(var i=0; i<all.length;i++){
+	 		all[i].visible=true;
+	 	}
+	 	for(var i=0; i<feedbacks.length;i++){
+	 		feedbacks[i].visible=true;
+	 		feedbacks[0].visible=false;
+	 	}
+		smthobj.avavisible=false;
+	}
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+app.controller('MastersCtrl', function($scope, $http){
+	$scope.search.service = undefined;
+	$scope.search.cat = undefined;
+
+	$http.get('http://localhost:8000/salons/api/masters/?format=json')
+                .then(function successCallback(response) {
+                	console.log("JNSNDS");
+					$scope.mastersArr = [];
+                	for(var i=0; i<response.data.length; i++){
+                		$http.get('http://localhost:8000/salons/api/users/'+response.data[i].master_author+'?format=json')
+						.then(function successCallback(response2){
+								 $http.get('http://localhost:8000/salons/api/userlogo/list/'+response2.data.pk+'?format=json')
+									.then(function successCallback(response3) {
+										response2.data.avatar = response3.data[0].avatar;
+									  }, function errorCallback(response3) {
+										console.log('Error respond');
+									  });
+
+								response2.data.color = Math.floor((Math.random()*14)+1);
+
+								for(var s=0;s<response.data.length;s++){
+									if(response2.data.pk==response.data[s].master_author){
+										response2.data.city=response.data[s].city;
+									}
+								}
+								$scope.mastersArr.push(response2.data);
+								console.log($scope.mastersArr);
+
+						  }, function errorCallback(response2) {
+							console.log('Error respond');
+						  });
+
+                	}
+
+
+
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+
+
+});
+
+
+
+
+
+
+
+app.controller('ServicesSalonsCtrl', function($scope, $http, $cookies, $window, $interval){
+
+
+
+	$scope.enterSlideShow = function(salon, all){
+		var itemPhoto=0;
+		pavels = $interval( function(){
+		if(all!=0){
+			salon.avavisible=true;
+			for(var i=0; i<all.length;i++){
+				all[i].visible=true;
+			}
+			all[itemPhoto].visible=false;
+			itemPhoto++;
+			if(itemPhoto==all.length){
+				itemPhoto=0;
+			}
+		}
+	 }, 800);
+	}
+	$scope.stopSlide = function(smthobj, all){
+		$interval.cancel(pavels);
+		for(var i=0; i<all.length;i++){
+	 		all[i].visible=true;
+	 		all[0].visible=false;
+	 	}
+	}
+
+
+
+
+
+	$http.get('http://localhost:8000/salons/api/services/?format=json')
+                .then(function successCallback(response1) {
+
+					if(response1.data.length!=0){
+
+
+						for(var m=0;m<response1.data.length;m++){
+							$http.get('http://localhost:8000/salons/api/saloncat?format=json')
+							.then(function successCallback(response2) {
+								for(var i=0;i<response1.data.length;i++){
+									for(var j=0;j<response2.data.length;j++){
+										if(response1.data[i].service==response2.data[j].pk){
+											response1.data[i].name = response2.data[j].service_name;
+											response1.data[i].cat = response2.data[j].cat;
+										}
+									}
+								}
+							  }, function errorCallback(response2) {
+								console.log('Error respond');
+							  });
+
+
+								$http.get('http://localhost:8000/salons/api/selfmasterservices?format=json')
+								.then(function successCallback(response2) {
+									for(var i=0;i<response2.data.length;i++){
+										for(var j=0;j<response2.data[i].master_services.length;j++){
+											for(var n=0;n<response1.data.length;n++){
+												if(response1.data[n].pk==response2.data[i].master_services[j]){
+													response1.data[n].master=response2.data[i].pk;
+													response1.data[n].master_user=response2.data[i].master_author;
+													response1.data[n].city=response2.data[i].city;
+												}
+											}
+										}
+
+
+
+										$http.get('http://localhost:8000/salons/api/selfmasterservices/'+response2.data[i].pk+'/?format=json')
+																.then(function successCallback(response9) {
+
+																	 $http.get('http://localhost:8000/salons/api/userlogo/list/'+response9.data.master_author+'/?format=json')
+																						.then(function successCallback(response10) {
+
+
+																							for(var j=0;j<response9.data.master_services.length;j++){
+																								for(var q=0;q<response1.data.length;q++){
+																									if(response1.data[q].pk==response9.data.master_services[j]){
+																										if(response1.data[q].master_user==response9.data.master_author){
+
+																											response1.data[q].avatar=response10.data[0].avatar;;
+
+																										}
+																									}
+																								}
+																							}
+
+																					  }, function errorCallback(response2) {
+																						console.log('Error respond');
+																					  });
+
+
+															  }, function errorCallback(response2) {
+																console.log('Error respond');
+															  });
+
+
+
+
+
+									}
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+								$http.get('http://localhost:8000/salons/api/salonservices?format=json')
+								.then(function successCallback(response2) {
+									console.log(response2.data);
+									for(var i=0;i<response2.data.length;i++){
+										for(var j=0;j<response2.data[i].salon_services.length;j++){
+											for(var n=0;n<response1.data.length;n++){
+												if(response1.data[n].pk==response2.data[i].salon_services[j]){
+													response1.data[n].salon=response2.data[i].pk;
+													response1.data[n].city=response2.data[i].city;
+												}
+											}
+										}
+
+
+										$http.get('http://localhost:8000/salons/api/sal/'+response2.data[i].pk+'/?format=json')
+																.then(function successCallback(response9) {
+																	for(var j=0;j<response9.data.salon_services.length;j++){
+																		for(var q=0;q<response1.data.length;q++){
+																			if(response1.data[q].pk==response9.data.salon_services[j]){
+																				response1.data[q].salon_logo = response9.data.salon_logo;
+																			}
+																		}
+																	}
+
+															  }, function errorCallback(response2) {
+																console.log('Error respond');
+															  });
+
+
+									}
+
+
+
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+								for(var i=0;i<response1.data.length;i++){
+									response1.data[i].works =[];
+								}
+
+								$http.get('http://localhost:8000/salons/api/getsalonworks?format=json')
+								.then(function successCallback(response2) {
+									for(var i=0;i<response2.data.length;i++){
+										for(var n=0;n<response1.data.length;n++){
+											if(response2.data[i].salon==response1.data[n].salon){
+												for(var j=0;j<response2.data[i].work_service.length;j++){
+													if(response1.data[n].service==response2.data[i].work_service[j]){
+														var a = {};
+														a.visible = true;
+														a.work_logo = response2.data[i].work_logo;
+														response1.data[n].works.push(a);
+														response1.data[n].works[0].visible = false;
+													}
+												}
+											}
+										}
+									}
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+								$http.get('http://localhost:8000/salons/api/getselfworks?format=json')
+								.then(function successCallback(response2) {
+
+
+									for(var i=0;i<response2.data.length;i++){
+										for(var n=0;n<response1.data.length;n++){
+											if(response2.data[i].master==response1.data[n].master){
+													if(response1.data[n].service==response2.data[i].work_service){
+														var a = {};
+														a.visible = true;
+														a.work_logo = response2.data[i].work_logo;
+														response1.data[n].works.push(a);
+														response1.data[n].works[0].visible = false;
+													}
+											}
+										}
+									}
+
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+
+
+
+
+								for(var i=0;i<response1.data.length;i++){
+									response1.data[i].color = Math.floor((Math.random()*14)+1);
+								}
+
+
+
+
+
+						}
+
+
+						$scope.ServicesArr = response1.data;
+						console.log("kjnkjnkjnNNNN");
+						console.log($scope.ServicesArr);
+					}
+                  }, function errorCallback(response1) {
+                    console.log('Error respond');
+                  });
+
+
+
+		$http.get('http://localhost:8000/salons/api/globecat?format=json')
+							.then(function successCallback(response2) {
+
+								console.log("My servicessssSS");
+								console.log(response2.data);
+
+								$scope.categoriesOfService = response2.data;
+
+							  }, function errorCallback(response2) {
+								console.log('Error respond');
+							  });
+
+
+
+
+
+	$scope.chooseAll='chooseCat';
+	//choose cat
+	$scope.chooseCatWork = function(listserv, serv){
+		$scope.chooseAll='NoChooseCat';
+		for(var i=0;i<listserv.length;i++){
+			listserv[i].status=false;
+			listserv[i].choose='NoChooseCat';
+		}
+		if(serv.status){
+			serv.choose = 'NoChooseCat';
+			serv.status=false;
+		}else{
+			serv.choose = 'chooseCat';
+			serv.status=true;
+			$scope.search.service = undefined;
+			$scope.search.cat = serv.pk;
+			$http.get('http://localhost:8000/salons/api/servicebycat/'+serv.pk+'?format=json')
+								.then(function successCallback(response2) {
+
+									$scope.servicebycat = response2.data;
+									console.log($scope.servicebycat);
+
+								  }, function errorCallback(response2) {
+									console.log('Error respond');
+								  });
+		}
+	}
+
+	//choose service
+	$scope.chooseServWork = function(listserv, serv){
+		$scope.chooseAll='NoChooseCat';
+		for(var i=0;i<listserv.length;i++){
+			listserv[i].status=false;
+			listserv[i].choose='NoChooseCat';
+		}
+		if(serv.status){
+			serv.choose = 'NoChooseCat';
+			serv.status=false;
+		}else{
+			serv.choose = 'chooseCat';
+			serv.status=true;
+			$scope.search.cat = undefined;
+			$scope.search.service = serv.pk;
+		}
+	}
+
+	$scope.chooseAllFunc = function(cat, serv){
+
+		for(var i=0;i<cat.length;i++){
+			cat[i].status=false;
+			cat[i].choose='NoChooseCat';
+		}
+		if(serv){
+			for(var i=0;i<serv.length;i++){
+				serv[i].status=false;
+				serv[i].choose='NoChooseCat';
+			}
+		}
+
+		$scope.search.service = undefined;
+		$scope.search.cat = undefined;
+		$scope.chooseAll = 'chooseCat';
+	}
+
+
+
+});
+
+
+app.controller('WorksSalonsCtrl', function($scope, $http, $cookies){
+			$scope.search.service = undefined;
+			$scope.search.cat = undefined;
+
+			$scope.WorksArr = [];
+			$http.get('http://localhost:8000/salons/api/listsalonworks/?format=json')
+                .then(function successCallback(response1) {
+					if(response1.data.length!=0){
+						for(var i=0;i<response1.data.length;i++){
+							response1.data[i].color = Math.floor((Math.random()*14)+1)
+
+
+						$http.get('http://localhost:8000/salons/api/sal/'+response1.data[i].salon+'?format=json')
+							.then(function successCallback(response2) {
+								for(var h=0;h<response1.data.length;h++){
+									if(response1.data[h].salon==response2.data.pk){
+										response1.data[h].city = response2.data.city;
+										response1.data[h].name = response2.data.name;
+									}
+								}
+							  }, function errorCallback(response2) {
+								console.log('Error respond');
+							  });
+
+						}
+
+
+						$scope.WorksArr.push(response1.data);
+					}
+                  }, function errorCallback(response1) {
+                    console.log('Error respond');
+                  });
+            $http.get('http://localhost:8000/salons/api/listselfworks/?format=json')
+                .then(function successCallback(response2) {
+					if(response2.data.length!=0){
+						for(var i=0;i<response2.data.length;i++){
+							response2.data[i].color = Math.floor((Math.random()*14)+1)
+
+							console.log(response2.data);
+
+							$http.get('http://localhost:8000/salons/api/masters/'+response2.data[i].master+'?format=json')
+							.then(function successCallback(response3) {
+								for(var h=0;h<response2.data.length;h++){
+									response2.data[h].city = response3.data.city;
+									response2.data[h].master_user = response3.data.master_author;
+
+
+
+
+								}
+							  }, function errorCallback(response2) {
+								console.log('Error respond');
+							  });
+
+
+
+
+						}
+
+
+						$scope.WorksArr.push(response2.data)
+
+					}
+                  }, function errorCallback(response2) {
+                    console.log('Error respond');
+                  });
+            console.log("Works");
+            console.log($scope.WorksArr);
+
+
+
+
+
+
+			// upload addLike
+			$scope.addSalonLike = function(workId, countLike, arrWhoLike){
+
+				arrWhoLike.push($cookies.get('pk'));
+
+				countLike++;
+				 var postdata = {
+					pk: workId,
+					work_like: countLike,
+					wholikeit: arrWhoLike
+				}
+				$http({
+					  url: 'http://localhost:8000/salons/api/salonslike/'+workId+'/',
+					  method: 'PUT',
+					  data: postdata,
+					  contentType:'application/json'
+					}).then(function successCallback(response) {
+						$http.get('http://localhost:8000/salons/api/listsalonworks/'+workId+'?format=json')
+						.then(function successCallback(response) {
+							$scope.detailWorks = response.data;
+							$scope.mataNotLikeIt=true;
+							for(var i=0; i<$scope.detailWorks.wholikeit.length; i++){
+								if($scope.detailWorks.wholikeit[i] == $cookies.get('pk')){
+									$scope.mataLikeIt = true;
+									$scope.mataNotLikeIt = false;
+								}
+							}
+
+						  }, function errorCallback(response) {
+							console.log('Error respond');
+						  });
+					}, function errorCallback(response) {
+						console.log(response);
+					});
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			$scope.detailShowSalonWork=true;
+			$scope.showSalonWork = function(workPk, name){
+				$http.get('http://localhost:8000/salons/api/listsalonworks/'+workPk+'?format=json')
+						.then(function successCallback(response) {
+							response.data.name = name;
+							$scope.detailWorks = response.data;
+							$scope.mataNotLikeIt = true;
+							for(var i=0; i<$scope.detailWorks.wholikeit.length; i++){
+								if($scope.detailWorks.wholikeit[i] == $cookies.get('pk')){
+									$scope.mataLikeIt = true;
+									$scope.mataNotLikeIt = false;
+								}
+							}
+
+						  }, function errorCallback(response) {
+							console.log('Error respond');
+						  });
+				$scope.detailShowSalonWork=!$scope.detailShowSalonWork;
+			}
+			$scope.showSalonWorkHide = function(){
+				$scope.detailShowSalonWork=!$scope.detailShowSalonWork;
+			}
+
+
+			$scope.detailShowSelfWork=true;
+			$scope.showSelfWork = function(workPk, user){
+				$http.get('http://localhost:8000/salons/api/listselfworks/'+workPk+'?format=json')
+						.then(function successCallback(response) {
+							response.data.user = user;
+							$scope.detailWorks = response.data;
+							$scope.mataNotLikeIt = true;
+							for(var i=0; i<$scope.detailWorks.wholikeit.length; i++){
+								if($scope.detailWorks.wholikeit[i] == $cookies.get('pk')){
+									$scope.mataLikeIt = true;
+									$scope.mataNotLikeIt = false;
+								}
+							}
+
+						  }, function errorCallback(response) {
+							console.log('Error respond');
+						  });
+				$scope.detailShowSelfWork=!$scope.detailShowSelfWork;
+			}
+			$scope.showSelfWorkHide = function(){
+				$scope.detailShowSelfWork=!$scope.detailShowSelfWork;
+			}
+
+
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

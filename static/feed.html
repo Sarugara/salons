@@ -1,0 +1,29 @@
+
+			<div class="content-parti-div">
+				<div class="in-content-parti-div">
+					<!--<div class="iconsettings-in-content">-->
+						<!--<i ng-click="editMasterFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>-->
+					<!--</div>-->
+					<h2 ng-if="myBusy"> <i class="fa fa-bell-o fa-1x" aria-hidden="true"></i> &nbsp; Ваши уведомления</h2>
+                    <ul class="feedUl">
+                        <li class="FeedItem" ng-repeat="book in books">
+                                <p> [[book.date  | date:"MM.dd' в ' h:mm" ]] | Заявка в салоне
+                                    <a href="http://localhost:8000/salons/sal/[[book.salon_pk]]"><b style="color:#1c70e3;">[[book.salon_name]]</b></a>
+                                    <i ng-click="FeedToogle=true; ReadFeed(book)" ng-hide="FeedToogle" class="fa fa-chevron-circle-down clickable" aria-hidden="true"></i>
+                                    <i ng-click="FeedToogle=false" ng-show="FeedToogle" class="fa fa-chevron-circle-up clickable" aria-hidden="true"></i>
+                                    <span ng-if="book.flag==1" style="color:#f00030; font-size:0.9em;">новый</span>
+                                </p>
+                                <div ng-show="FeedToogle">
+                                    <div class="FeedToogleImg">
+                                        <img ng-src="[[book.avatar]]" style="width:30px; height:40px;">
+                                    </div>
+                                    <div class="FeedToogleDesc">
+                                        <p>[[book.first_name]] [[book.last_name]] | [[book.email]]</p>
+                                        <p>Услуги: <span ng-repeat="service in book.service">[[service.service_name]] </span></p>
+                                        <p>Номер телефона: [[book.book]]</p>
+                                    </div>
+                                </div>
+                        </li>
+                    </ul>
+				</div>
+			</div>

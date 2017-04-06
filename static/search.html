@@ -1,0 +1,51 @@
+            <h1 ng-init="search.name=why">Поиск по запросу: [[why]]</h1>
+
+			<div ng-repeat="service in ServicesArr | filter:search" ng-mouseenter="enterSlideShow(service, service.works)" ng-mouseleave="stopSlide(service, service.works)" class="in-body-part-div">
+                <a ng-if="service.salon" href="http://localhost:8000/salons/sal/[[service.salon]]/">
+                    <div  class="in-body-part-img-div">
+                        <img ng-repeat="work in service.works" ng-hide="work.visible" ng-src="[[work.work_logo]]">
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[service.color]]">
+                        <h3>[[service.name]]</h3>
+                        <p>[[service.service_desc]]</p>
+                        <p>Цена: [[service.service_price]] тг</p>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+                <a ng-if="service.master" href="http://localhost:8000/salons/profile/[[service.master_user]]/#!/master">
+                    <div  class="in-body-part-img-div">
+                        <img ng-repeat="work in service.works" ng-hide="work.visible" ng-src="[[work.work_logo]]">
+                        <img ng-hide="work" ng-src="[[service.avatar]]">
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[service.color]]">
+                        <h3>[[service.name]]</h3>
+                        <p>[[service.service_desc]]</p>
+                        <p>Цена: [[service.service_price]] тг</p>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+			</div>
+
+
+
+
+
+			<div ng-repeat="salon in bestsalons | filter:search" ng-mouseenter="enterSlideShowSal(salon, salon.photos, salon.feedbacks)" ng-mouseleave="stopSlideSal(salon, salon.photos, salon.feedbacks)" class="in-body-part-div">
+                <a href="http://localhost:8000/salons/sal/[[salon.pk]]/">
+                    <div  class="in-body-part-img-div">
+                        <img ng-repeat="photo in salon.photos" ng-hide="photo.visible" ng-src="[[photo.photos]]">
+                        <img ng-hide="salon.avavisible"  ng-src="[[salon.salon_logo]]">
+                        <p class="mainStarP"><i ng-repeat="starOne in OldsumvalueVal track by $index" id="OldstarOne[[starOne.value]]" ng-class="{'fillstar': starOne.hover}" class="fa fa-star-o mainstar-o fa-1x" aria-hidden="true"></i> </p>
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[salon.color]]">
+                        <h3>[[salon.name]]</h3>
+                        <p>[[salon.salon_desc]]</p>
+                        <div style="text-align:right;">
+                            <p class="font-size:0.7em;" ng-repeat="feedback in salon.feedbacks" ng-hide="feedback.visible"><i>"[[feedback.feedback]]"</i> <b>[[feedback.name]]</b></p>
+                        </div>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+			</div>
+
+

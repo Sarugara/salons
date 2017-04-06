@@ -1,0 +1,95 @@
+            <div class="content-parti-div">
+				<div class="in-content-parti-div">
+					<!--<div class="iconsettings-in-content">-->
+						<!--<i ng-click="editMasterFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>-->
+					<!--</div>-->
+					<h2 ng-if="myBusy">Ваши заведения</h2>
+					<h2 ng-if="notMyBusy">Заведения пользователя</h2>
+
+
+					<div class="in-content-parti-part">
+						<ul class="work-people">
+							<li ng-if="myBusy" style="cursor:pointer;" ng-click="AddBusyFunc()">
+								<br/>
+								<br/>
+								<i class="fa fa-plus-circle fa-5x" aria-hidden="true"></i>
+								<br/>
+								<br/>
+								<h4>Добавить заведение</h4>
+							</li>
+							<li ng-repeat="salon in mysalons">
+								<a href="http://localhost:8000/salons/sal/[[salon.pk]]/">
+									<div class="divimg">
+										<img ng-src="[[salon.salon_logo]]">
+									</div>
+									<h4>[[salon.name]]</h4>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="addbusy" >
+				<h1 class="add-busy-h1">Добавить заведение</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="upload_busy()">
+						<div class="icon_before_input">
+							<i class="fa fa-sitemap" aria-hidden="true"></i>
+						</div>
+						<select ng-model="typeBusy" required>
+							<option value="salons">Салон красоты</option>
+						</select>
+						<div class="icon_before_input">
+							<i class="fa fa-sitemap" aria-hidden="true"></i>
+						</div>
+						<select ng-model="salon_city" required>
+							<option>Выберите город...</option>
+							<option value="2">Алматы</option>
+							<option value="1">Астана</option>
+						</select>
+						<div class="icon_before_input">
+							<i class="fa fa-university" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Название заведения" ng-model="salon_name" required>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Описание" ng-model="salon_desc" required></textarea>
+						<div class="icon_before_input">
+							<i class="fa fa-image" aria-hidden="true"></i>
+						</div>
+						<input type="file" file-input="files" multiple required>
+						<div class="icon_before_input">
+							<i class="fa fa-tty" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Контакты" ng-model="salon_contact" required>
+						<div class="icon_before_input">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Адрес" ng-model="salon_adress" required>
+						<div class="icon_before_input">
+							<i class="fa fa-window-maximize" aria-hidden="true"></i>
+						</div>
+						<!---<input type="text" placeholder="Сайт" ng-model="salon_site" required>-->
+						<button type="submit">Добавить</button>
+					</form>
+					<p ng-if="success_addbusy" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Заведение добавлено</p>
+					<p ng-if="error_addbusy" class="error"> <i class="fa fa-check" aria-hidden="true"></i> Не верный формат</p>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="addbusy" class="backBlack"  ng-click="AddBusyFunc()">
+			</div>

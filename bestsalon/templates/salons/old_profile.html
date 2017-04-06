@@ -1,0 +1,23 @@
+
+<h1>{{ user.username }}</h1>
+<p>{{ user.first_name }}</p>
+{% if user.is_authenticated %}
+    <p style="color:green;"><b>Online</b></p>
+{%else%}
+    <p style="color:red;"><b>Offline</b></p>
+{%endif%}
+
+<ul>
+    {% for salon in salons %}
+        <a href="{% url 'allsalons:detail' salon.id %}">
+            <li>
+
+                <p>{{salon.salon_name}}</p>
+            </li>
+        </a>
+    {% endfor %}
+</ul>
+
+{% if itsme %}
+<a href="{% url 'allsalons:addmysalons' user.pk %}">Add salon</a>
+{% endif %}

@@ -1,0 +1,33 @@
+
+            <h1>Лучшие салоны</h1>
+			<div ng-repeat="salon in bestsalons | filter:search | orderBy:values:true" ng-mouseenter="enterSlideShow(salon, salon.photos, salon.feedbacks)" ng-mouseleave="stopSlide(salon, salon.photos, salon.feedbacks)" class="in-body-part-div">
+                <a href="http://localhost:8000/salons/sal/[[salon.pk]]/">
+                    <div  class="in-body-part-img-div">
+                        <div style="position:relative;">
+                            <div ng-hide="showMenu" class="blackShtor">
+                                <i ng-if="salon.photos.length>0" style="color:white; position:absolute; right:10px; top:10px; z-index:9999999;" class="fa fa-square-o fa-2x" aria-hidden="true"></i>
+                                <i ng-if="salon.photos.length>0" style="color:white; position:absolute; right:8px; top:15px; z-index:9999999;" class="fa fa-square-o fa-1x" aria-hidden="true"></i>
+                            </div>
+                            <div ng-if="showMenu" class="blackShtorWide">
+                                <i ng-if="salon.photos.length>0" style="color:white; position:absolute; right:10px; top:10px; z-index:9999999;" class="fa fa-square-o fa-2x" aria-hidden="true"></i>
+                                <i ng-if="salon.photos.length>0" style="color:white; position:absolute; right:8px; top:15px; z-index:9999999;" class="fa fa-square-o fa-1x" aria-hidden="true"></i>
+                            </div>
+                            <img ng-repeat="photo in salon.photos" ng-hide="photo.visible" ng-src="[[photo.photos]]">
+                            <img ng-hide="salon.avavisible"  ng-src="[[salon.salon_logo]]">
+                            <p class="mainStarP"><i ng-repeat="starOne in salon.OldsumvalueVal track by $index" id="OldstarOne[[starOne.value]]" ng-class="{'fillstar': starOne.hover}" class="fa fa-star-o mainstar-o fa-1x" aria-hidden="true"></i> </p>
+                        </div>
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[salon.color]]">
+                        <h3>[[salon.name]]</h3>
+                        <p>[[salon.salon_desc]]</p>
+                        <div style="text-align:right;">
+                            <p class="font-size:0.5em;" ng-repeat="feedback in salon.feedbacks" ng-hide="feedback.visible"><i>"[[feedback.feedback]]"</i> <b>[[feedback.name]]</b></p>
+                            <i ng-if="salon.feedbacks.length>1" style="color:white;font-size:0.8em;" class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                        </div>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+			</div>
+
+
+

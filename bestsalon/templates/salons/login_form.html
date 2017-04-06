@@ -1,0 +1,244 @@
+
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html ng-app="salon">
+<head>
+	<!-- <base href="/" /> -->
+	<!-- SEO Optima -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+</head>
+<body ng-controller="divCtrl">
+
+
+
+
+
+	<header>
+
+		<div class="in-up-header-div">
+			<div class="in-up-header-in-left-div">
+				<div class="bar-icon-div">
+					<i class="fa fa-bars fa-2x" aria-hidden="true" ng-click="menuShowHide()"></i>
+				</div>
+				<h2>Салоны</h2>
+			</div>
+			<div class="in-up-header-in-center-div">
+				<i class="fa fa-search search-icon" aria-hidden="true"></i>
+				<input type="text" placeholder="Поиск" ng-model="name">
+			</div>
+			<div class="in-up-header-in-right-div">
+					<i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+			</div>
+		</div>
+
+	</header>
+
+	<div class="body-div">
+
+		<div ng-hide="showMenu" class="in-body-left-div" ng-click="menuShowHide()">
+			<div class="in-up-body-in-left-div">
+				<div class="body-bar-h2-div">
+					<h2>Vide</h2>
+				</div>
+				<div class="body-bar-icon-div">
+					<i class="fa fa-chevron-left fa-2x" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="empty"></div>
+			<ul>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-home fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Главная</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-building fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div"><a href="#!/salons">Салоны</a></div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-hospital-o fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div"><a href="#!/clinic">Клиники</a></div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-leaf fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">SPA</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-users fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Мастера</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Тренировки</div>
+				</li>
+				<li>
+					<div class="in-body-left-icon-div"><i class="fa fa-graduation-cap fa-2x" aria-hidden="true"></i></div>
+					<div class="in-body-left-text-div">Курсы</div>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="profile-in-body-left-div">
+			<div class="blackShtor">
+
+			</div>
+			<div class="iconsettings_uplogo">
+					<i ng-click="editLogoFunc()" class="fa fa-download fa-2x" aria-hidden="true"></i>
+			</div>
+            <div class="iconsettings">
+					<i ng-click="editUserFunc()" class="fa fa-cogs fa-2x" aria-hidden="true"></i>
+			</div>
+            {% if itsme %}
+			<div class="iconsettings">
+					<i ng-click="editUserFunc()" class="fa fa-cogs fa-2x" aria-hidden="true"></i>
+			</div>
+            {% endif %}
+			<div class="profile-img-div">
+
+			</div>
+			<div class="profile-logo-div">
+				<img src="[[userlogo.avatar]]">
+			</div>
+			<div class="profile-desc-div">
+				<p> [[ user.username ]] </p>
+				<h1>[[ user.first_name ]] [[ user.last_name ]]</h1>
+			</div>
+			<!--<div class="profile-contact-div">-->
+				<!--<p>Время работы:</p>-->
+				<!--<p>11:00 - 19:00</p>-->
+			<!--</div>-->
+			<div class="profile-contact-div">
+				<p ng-if="profile.contact">Город: <br> [[  profile.city ]]</p>
+				<br/>
+				<p ng-if="profile.contact">Телефоны: <br/> [[ profile.contact ]]</p>
+				<br/>
+				<p ng-if="user.email">Email: <br> [[  user.email ]]</p>
+				<!--<p class="profile-site"><a href="http://[[ salonNg.salon_site ]]" target="_blank">[[ salonNg.salon_site ]]</a></p>-->
+			</div>
+		</div>
+		<div class="in-body-right-div">
+
+
+            <div class="main-add-div editU" >
+				<h1 class="add-busy-h1">Вход</h1>
+
+				<div class="add-busy-div">
+					<form class="login_form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p>{{ login_error }}</p>
+                        {% include 'salons/form_template.html' %}
+                        <button type="submit">Submit</button>
+                    </form>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!--<div class="content-block-div">-->
+				<!--<div class="in-content-block-div">-->
+					<!--<div class="iconsettings-in-content">-->
+						<!--<i ng-click="editActionFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>-->
+					<!--</div>-->
+					<!--<h2>Акций</h2>-->
+
+					<!--<div class="in-content-block-part">-->
+
+					<!--</div>-->
+
+					<!--<p>Наши услуги самые крутые несмотря на то, что мировые конгломераты каждым днем пытаются нанести раковой удар по нашей репутации. Мы находимся в Казахстане, в одной из самых отстающих стран, в стране третьего мира, но весь мир нам завидует, потому что вода течет вверх, а боги устали писать историю!</p>-->
+				<!--</div>-->
+			<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!-- <ng-view></ng-view> -->
+
+		</div>
+
+	</div>
+
+
+	<footer>
+
+	</footer>
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="{% static 'js/angular.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-resource.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-route.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-animate.min.js' %}"></script>
+	<script type="text/javascript">
+		var salon = angular.module('salon', [ 'ngRoute', 'ngAnimate', 'ngResource']);
+
+
+salon.config(function($httpProvider, $interpolateProvider, $resourceProvider, $qProvider) {
+	$interpolateProvider.startSymbol('[[').endSymbol(']]');
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $resourceProvider.defaults.stripTrailingSlashes=false;
+    $qProvider.errorOnUnhandledRejections(false);
+});
+
+
+
+salon.controller('divCtrl', function($scope, $http, $timeout){
+
+
+
+
+
+});
+
+
+
+
+
+
+	</script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,2909 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html ng-app="salon">
+<head>
+	<!-- <base href="/" /> -->
+	<!-- SEO Optima -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+</head>
+<body ng-controller="divCtrl">
+
+	<header>
+
+		<div class="in-up-header-div">
+			<div class="in-up-header-in-left-div">
+				<div class="bar-icon-div">
+					<i class="fa fa-bars fa-2x" aria-hidden="true" ng-click="menuShowHide()"></i>
+				</div>
+				<h2>Личный кабинет</h2>
+			</div>
+			<div class="in-up-header-in-center-div">
+				<form ng-submit="startSearch()">
+					<i class="fa fa-search search-icon" aria-hidden="true"></i>
+					<input type="text" placeholder="Поиск" ng-model="why">
+					<input style="opacity:0;" type="submit">
+				</form>
+			</div>
+			<div ng-controller="HeadCtrl" class="in-up-header-in-right-div">
+					<i ng-if="outHome" ng-click="AuthReg()" class="fa fa-user-circle-o fa-2x clickable" aria-hidden="true"></i>
+					<span ng-if="inHome" class="usernameInTop">[[decoUsername]]</span>
+					<a ng-if="inHome" href="http://localhost:8000/salons/profile/[[me_pk]]"><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i></a>
+					&nbsp;
+					<a ng-if="inHome" href="http://localhost:8000/salons/profile/[[me_pk]]#!/feed"><i class="fa fa-bell fa-2x" aria-hidden="true"></i> <span ng-if="newsCount" class="newsHeader">[[newsCount]]</span> </a>
+					&nbsp;
+					<i ng-if="inHome" ng-click="Logout()" class="fa fa-sign-out fa-2x clickable" aria-hidden="true"></i>
+			</div>
+		</div>
+
+	</header>
+
+	<div class="body-div">
+
+		<div ng-hide="showMenu" class="in-body-left-div" ng-click="menuShowHide()">
+			<div class="in-up-body-in-left-div">
+				<div class="body-bar-h2-div">
+					<h2>Vide</h2>
+				</div>
+				<div class="body-bar-icon-div">
+					<i class="fa fa-chevron-left fa-2x" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="empty"></div>
+			<ul>
+				<a href="http://localhost:8000/salons/sal#!/">
+					<li>
+						<div class="in-body-left-icon-div"><i class="fa fa-building fa-2x" aria-hidden="true"></i></div>
+						<div class="in-body-left-text-div">Лучшие салоны</div>
+					</li>
+				</a>
+				<a href="http://localhost:8000/salons/sal#!/services">
+					<li>
+						<div class="in-body-left-icon-div"><i class="fa fa-hospital-o fa-2x" aria-hidden="true"></i></div>
+						<div class="in-body-left-text-div">Услуги</div>
+					</li>
+				</a>
+				<a href="http://localhost:8000/salons/sal#!/workssalons">
+					<li>
+						<div class="in-body-left-icon-div"><i class="fa fa-leaf fa-2x" aria-hidden="true"></i></div>
+						<div class="in-body-left-text-div">Работы салонов</div>
+					</li>
+				</a>
+			</ul>
+		</div>
+
+
+		<div class="profile-in-body-left-div">
+			<div class="blackShtor">
+				<p ng-hide="NoneMaster" class="mainStarP"><i ng-repeat="starOne in OldsumvalueVal track by $index" id="OldstarOne[[starOne.value]]" ng-class="{'fillstar': starOne.hover}" class="fa fa-star-o mainstar-o fa-3x" aria-hidden="true"></i> </p>
+			</div>
+			<!--<div ng-hide="NoneMaster" ng-if="yesItsMe" class="iconsettings_uplogo">
+					<i ng-click="editLogoFunc()" class="fa fa-download fa-2x" aria-hidden="true"></i>
+			</div>-->
+            <div ng-hide="NoneMaster" ng-if="yesItsMe" class="iconsettings">
+					<i ng-click="editUserFunc()" class="fa fa-cogs fa-2x" aria-hidden="true"></i>
+			</div>
+			<div ng-if="yesItsMe" class="modeOfUser">
+
+				<a ng-href="#!/user"><button ng-click="modeUser()"> <i class="fa fa-user" aria-hidden="true"></i> Пользователь</button></a>
+				<a ng-href="#!/owner"><button ng-click="modeOwner()"> <i class="fa fa-user-secret" aria-hidden="true"></i> Хозяин</button></a>
+				<!--<a ng-href="#!/master"><button ng-click="modeMaster()"> <i class="fa fa-user-md" aria-hidden="true"></i> Мастер</button></a>-->
+
+			</div>
+
+			<div class="profile-img-div salBg[[BackRand()]]">
+
+			</div>
+			<div ng-hide="NoneMaster" class="profile-logo-div">
+				<img ng-src="[[userlogo.avatar]]">
+			</div>
+			<div ng-hide="NoneMaster" class="profile-desc-div">
+				<!--<p ng-if="IfModeMaster"> [[ user.username ]] </p>-->
+				<h1 ng-hide="NoneMaster">[[ user.first_name ]] [[ user.last_name ]]</h1>
+			</div>
+			<div ng-hide="EmptyMaster || NoneMaster" style="text-align:center;" class="profile-noexist-div">
+				<i class="fa fa-search fa-5x" aria-hidden="true"></i>
+				<br/><br/>
+				<p style="color:black;">Такой мастер не существует</p>
+				<br/>
+				<p ng-if="yesItsMe" style="color:black;" class="clickable" ng-click="AddMasterFunc()"><i class="fa fa-plus fa-1x" aria-hidden="true"></i> <u>Хотите создать мастера?</u></p>
+			</div>
+
+
+			<!--<div class="profile-contact-div">-->
+				<!--<p>Время работы:</p>-->
+				<!--<p>11:00 - 19:00</p>-->
+			<!--</div>-->
+			<div ng-hide="NoneMaster" class="profile-contact-div">
+
+				<p ng-if="cityOfMaster" ng-hide="NoneMaster"><b>Город:</b> [[  cityOfMaster ]]</p>
+				<br ng-if="cityOfMaster" />
+				<p ng-if="profile.adress" ng-hide="NoneMaster"><b>Адрес:</b> [[  profile.adress ]]</p>
+				<br ng-if="profile.adress" />
+				<p ng-if="profile.contact" ng-hide="NoneMaster"><b>Телефон:</b> [[ profile.contact ]]</p>
+				<br ng-if="profile.contact" />
+				<p ng-if="user.email && cityOfMaster" ng-hide="NoneMaster"><b>Email:</b> [[  user.email ]]</p>
+				<br ng-if="user.email && cityOfMaster"/>
+				<p ng-if="Oldservicestar">Качество обслуживания: </p>
+				<p><i ng-repeat="starTwo in Oldservicestar track by $index" id="OldstarTwo[[starTwo.value]]" ng-class="{'fillstar': starTwo.hover}" class="fa fa-star-o fa-2x" aria-hidden="true"></i> </p>
+				<br/>
+				<p ng-if="OldworkvalueVal">Качество работы: </p>
+				<p><i ng-repeat="starThree in OldworkvalueVal track by $index" id="OldstarThree[[starThree.value]]" ng-class="{'fillstar': starThree.hover}" class="fa fa-star-o fa-2x" aria-hidden="true"></i> </p>
+				<br/>
+				<p ng-if="countVal">Оценило человек: [[countVal]]</p>
+
+			</div>
+
+			<div ng-hide="NoneMaster" ng-if="haveMasterFeedback" class="feedbacksBlock">
+				<p ng-repeat="feedbacks in masterFeedbacks"><br/> <img style="width:25px; height:25px;" ng-src="[[feedbacks.avatar]]"> [[feedbacks.first_name]] [[feedbacks.last_name]] <br/> [[feedbacks.feedback]] <br/></p>
+			</div>
+			<div ng-hide="NoneMaster" class="ButtonZakaz" align="right">
+					<button ng-if="notMyBusy && isAuth"  ng-click="editValue()" class="valueOfSalon">Оценить салон</button>
+					<br/>
+					<p ng-if="ItsNotFavMas && isAuth" class="clickable" ng-click="addFavSalon(wholoveit)" style="text-align:right;">Добавить в любимые мастера</p>
+					<p ng-if="ItsMyFavMas && isAuth" style="text-align:right;">Ваш любимый мастер <i style="color:#f00040;" class="fa fa-heart" aria-hidden="true"></i></p>
+			</div>
+
+		</div>
+
+
+		<div class="in-body-right-div">
+
+
+			<ng-view></ng-view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!--<div class="content-block-div">-->
+				<!--<div class="in-content-block-div">-->
+					<!--<div class="iconsettings-in-content">-->
+						<!--<i ng-click="editActionFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>-->
+					<!--</div>-->
+					<!--<h2>Акций</h2>-->
+
+					<!--<div class="in-content-block-part">-->
+
+					<!--</div>-->
+
+					<!--<p>Наши услуги самые крутые несмотря на то, что мировые конгломераты каждым днем пытаются нанести раковой удар по нашей репутации. Мы находимся в Казахстане, в одной из самых отстающих стран, в стране третьего мира, но весь мир нам завидует, потому что вода течет вверх, а боги устали писать историю!</p>-->
+				<!--</div>-->
+			<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div  class="main-add-div editU" ng-hide="authReg" >
+				<h1 class="add-busy-h1">Вход</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="come_in()">
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Логин" ng-model="usernameReg" required>
+						<div class="icon_before_input">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" placeholder="Пароль" ng-model="passwordReg" required>
+						<button type="submit">Войти</button>
+					</form>
+					<p ng-click="Reg()" class="clickable">зарегистрироваться</p>
+				</div>
+			</div>
+
+
+
+			<div ng-hide="authReg" class="backBlack"  ng-click="AuthReg()">
+			</div>
+
+
+
+
+
+
+
+
+			<div  class="main-add-div editU" ng-hide="reg" >
+				<h1 class="add-busy-h1">Регистрация</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="reg_in()">
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Логин" ng-model="usernameReg" required>
+						<div class="icon_before_input">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" placeholder="Email" ng-model="emailReg" required>
+						<div class="icon_before_input">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" placeholder="Пароль" ng-model="passwordReg" required>
+						<div class="icon_before_input">
+							<i class="fa fa-unlock-alt" aria-hidden="true"></i>
+						</div>
+						<input type="password" placeholder="Повторите пароль" ng-model="repasswordReg" required>
+						<button type="submit">Зарегистрироваться</button>
+					</form>
+
+				</div>
+			</div>
+
+			<div ng-hide="reg" class="backBlack"  ng-click="Reg()">
+			</div>
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="editUser" >
+				<h1 class="add-busy-h1">Изменить</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="EditMaster()">
+						<div class="icon_before_input">
+							<i class="fa fa-sitemap" aria-hidden="true"></i>
+						</div>
+						<select ng-model="city" required>
+							<option>Выберите город...</option>
+							<option value="2">Алматы</option>
+							<option value="1">Астана</option>
+						</select>
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+							<input type="text" placeholder="Имя" ng-model="first_name" required>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Фамилия" ng-model="last_name" required></textarea>
+						<div class="icon_before_input">
+							<i class="fa fa-image" aria-hidden="true"></i>
+						</div>
+						<input type="file" file-input="files" multiple required>
+						<div class="icon_before_input">
+							<i class="fa fa-tty" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Контакты" ng-model="contact" required>
+						<div class="icon_before_input">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Адрес" ng-model="adress" required>
+						<button type="submit">Добавить</button>
+					</form>
+
+					<p ng-if="success_user" class="success"><i class="fa fa-check" aria-hidden="true"></i> Изменения сохранены </p>
+				</div>
+			</div>
+
+
+			<div ng-hide="editUser" class="backBlack"  ng-click="editUserFunc()">
+			</div>
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="editLogo" >
+				<h1 class="add-busy-h1">Изменить изображение</h1>
+
+				<div class="add-busy-div">
+					 <form ng-submit="upload()">
+						 <div class="icon_before_input">
+							<i class="fa fa-image" aria-hidden="true"></i>
+						</div>
+						<input type="file" file-input="files" multiple required>
+						<button type="submit"> Изменить</button>
+					</form>
+					<p ng-if="success_logo" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Изменения сохранены</p>
+					<p ng-if="error_logo" class="error"> <i class="fa fa-check" aria-hidden="true"></i> Не верный формат</p>
+
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="editLogo" class="backBlack"  ng-click="editLogoFunc()">
+			</div>
+
+
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="addmaster" >
+				<h1 class="add-busy-h1">Добавить мастера</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="AddMaster()">
+						<div class="icon_before_input">
+							<i class="fa fa-sitemap" aria-hidden="true"></i>
+						</div>
+						<select ng-model="city" required>
+							<option>Выберите город...</option>
+							<option value="2">Алматы</option>
+							<option value="1">Астана</option>
+						</select>
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+							<input type="text" placeholder="Имя" ng-model="first_name" required>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Фамилия" ng-model="last_name" required></textarea>
+						<div class="icon_before_input">
+							<i class="fa fa-image" aria-hidden="true"></i>
+						</div>
+						<input type="file" file-input="files" multiple required>
+						<div class="icon_before_input">
+							<i class="fa fa-tty" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Контакты" ng-model="contact" required>
+						<div class="icon_before_input">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Адрес" ng-model="adress" required>
+						<button type="submit">Добавить</button>
+					</form>
+					<p ng-if="success_addmaster" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Мастер добавлен</p>
+					<p ng-if="error_addmaster" class="error"> <i class="fa fa-check" aria-hidden="true"></i> Не верный формат</p>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="addmaster" class="backBlack"  ng-click="AddMasterFunc()">
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="editvalue" >
+				<h1 class="add-busy-h1">Оцените салон [[salonNg.name]]</h1>
+
+				<div class="add-busy-div">
+					<!---<i ng-if="clear" ng-mouseenter="fill=true"  class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+					<i ng-mouseleave="clear=true" ng-mouseenter="clear=false" ng-if="fill" class="fa fa-star fa-3x" aria-hidden="true"></i>-->
+
+					<div class="RatingDiv">
+						<form ng-submit="uploadAllValues()">
+							<span>Качество обслуживания: </span>
+							<i ng-required="requiredOne" ng-repeat="star in servicestar track by $index" id="starOne[[star.value]]" ng-click="setValueService(star.value)" ng-mouseenter="hoverValueService(star.value)" ng-mouseleave="outValueService()" ng-class="{'fillstar': star.hover}" class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+							<br/>
+							<span>Качество работы: </span>
+							<i ng-required="requiredTwo" ng-repeat="star in workstar track by $index" id="starTwo[[star.value]]" ng-click="setValueWork(star.value)" ng-mouseenter="hoverValueWork(star.value)" ng-mouseleave="outValueWork()" ng-class="{'fillstar': star.hover}" class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+							<br/>
+							<button class="clickable" ng-if="requiredOne && requiredTwo" type="submit">Оценить</button>
+						</form>
+
+						<p ng-if="successValueAccept" class="success"> <i class="fa fa-check" aria-hidden="true"></i>Ваша оценка была принята</p>
+						<p ng-if="ToValueError" class="success"> <i class="fa fa-check" aria-hidden="true"></i> [[ToValueError]]</p>
+
+					</div>
+				</div>
+
+				<h1 class="add-busy-h1">Оставить отзыв</h1>
+
+				<div class="add-busy-div">
+					<!---<i ng-if="clear" ng-mouseenter="fill=true"  class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+					<i ng-mouseleave="clear=true" ng-mouseenter="clear=false" ng-if="fill" class="fa fa-star fa-3x" aria-hidden="true"></i>-->
+
+					<div class="RatingDiv">
+						<form ng-submit="feedback(masterFeedback)">
+							<textarea placeholder="Поделитесь вашими впечатлениями об этом мастере" ng-model="feedbackData" required></textarea>
+							<button type="submit">Отправить</button>
+						</form>
+						<p ng-if="successValue" class="success"> <i class="fa fa-check" aria-hidden="true"></i>Ваша оценка была принята</p>
+					</div>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="editvalue" class="backBlack"  ng-click="editValue()">
+			</div>
+
+
+
+
+			<div class="main-add-div editU" ng-hide="ifBook" >
+				<h1 class="add-busy-h1">Записаться к мастеру [[salonNg.name]]</h1>
+
+				<div class="add-busy-div">
+					<!---<i ng-if="clear" ng-mouseenter="fill=true"  class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+					<i ng-mouseleave="clear=true" ng-mouseenter="clear=false" ng-if="fill" class="fa fa-star fa-3x" aria-hidden="true"></i>-->
+						<form ng-submit="upload_book(salon_book)">
+							<p>Выберите услуги: </p>
+							<button ng-click="chooseCat(listservWork, serv)" class="NoChooseCat" ng-class="serv.choose" ng-repeat="serv in listservWork">[[serv.pk]] [[serv.service_name]]</button>
+							<br/>
+							<p>Ваш контактный номер: </p>
+							<input type="texl" placeholder="Введите номер телефона, чтобы с вами связались" ng-model="bookNumber" required>
+							<br/>
+							<button class="clickable" type="submit">Отправить</button>
+						</form>
+
+						<p ng-if="successBook" class="success"> <i class="fa fa-check" aria-hidden="true"></i>Ваша заявка была отправлена</p>
+				</div>
+
+			</div>
+
+
+
+			<div ng-hide="ifBook" class="backBlack"  ng-click="book()">
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</div>
+
+	</div>
+
+
+	<footer>
+
+	</footer>
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="{% static 'js/angular.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-resource.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-route.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-animate.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-cookies.min.js' %}"></script>
+	<script type="text/javascript">
+		var salon = angular.module('salon', [ 'ngRoute', 'ngAnimate', 'ngResource', 'ngCookies']);
+
+
+salon.config(function($routeProvider, $httpProvider, $interpolateProvider, $resourceProvider, $qProvider) {
+	$interpolateProvider.startSymbol('[[').endSymbol(']]');
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $resourceProvider.defaults.stripTrailingSlashes=false;
+    $qProvider.errorOnUnhandledRejections(false);
+
+
+    $routeProvider
+	.when('/feed', {
+		templateUrl: '../../../static/feed.html',
+		controller: 'FeedCtrl'
+	})
+
+	.when('/owner', {
+		templateUrl: '../../../static/owner.html',
+		controller: 'OwnerCtrl'
+	})
+	.when('/user', {
+		templateUrl: '../../../static/user.html',
+		controller: 'UserCtrl'
+	})
+
+});
+
+/*.when('/master', {
+		templateUrl: '../../../static/master.html',
+		controller: 'MasterCtrl'
+	})*/
+
+salon.controller('MasterCtrl', function($scope, $cookies, $http, $timeout, $window){
+
+
+
+
+
+
+
+		$scope.detailShowWork=true;
+		$scope.showWork = function(workPk){
+			$http.get('http://localhost:8000/salons/api/listselfworks/'+workPk+'?format=json')
+					.then(function successCallback(response) {
+						$scope.detailWorks = response.data;
+						$scope.mataNotLikeIt = true;
+						for(var i=0; i<$scope.detailWorks.wholikeit.length; i++){
+							if($scope.detailWorks.wholikeit[i] == $cookies.get('pk')){
+								$scope.detailWorks.mataLikeIt = true;
+								$scope.detailWorks.mataNotLikeIt = false;
+							}
+						}
+					  }, function errorCallback(response) {
+						console.log('Error respond');
+					  });
+			$scope.detailShowWork=!$scope.detailShowWork;
+		}
+		$scope.showWorkHide = function(){
+			$scope.detailShowWork=!$scope.detailShowWork;
+		}
+
+		//choose cat
+	var serviceArr = [];
+	$scope.chooseServWork = function(listserv, serv){
+		if(serv.status){
+			serv.choose = 'NoChooseCat';
+			serv.status=false;
+			var indexElem = serviceArr.indexOf(serv.pk);
+			serviceArr.splice(indexElem, 1);
+		}else{
+			serv.choose = 'chooseCat';
+			serv.status=true;
+			serviceArr.push(serv.pk);
+			status=false;
+		}
+	}
+
+
+	// upload add work
+	$scope.upload_work = function(){
+		var fd = new FormData()
+		angular.forEach($scope.files, function(file){
+			fd.append('work_logo', file);
+			fd.append('master', $scope.masterPk);
+			fd.append('work_desc', $scope.work_desc);
+			fd.append('work_service', serviceArr);
+		})
+		$http.post('http://localhost:8000/salons/api/selfworks/{{user.pk}}/', fd,
+		{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.then(function successCallback(response) {
+                	console.log(response);
+                    $scope.success_addwork = true;
+                    $timeout( function(){ $scope.AddWorkFunc(); }, 1000);
+                    $scope.getWorks();
+                    $scope.work_desc=null;
+                  }, function errorCallback(response) {
+                    $scope.error_addwork = true;
+                  });
+	}
+
+	// upload edit work
+	$scope.upload_edit_work = function(){
+		var fd = new FormData()
+		angular.forEach($scope.files, function(file){
+			fd.append('work_logo', file);
+			fd.append('master', $scope.masterPk);
+			fd.append('work_desc', $scope.work_desc);
+			fd.append('work_service', serviceArr);
+		})
+		$http.put('http://localhost:8000/salons/api/selfworks/edit/'+$scope.work_id+"/", fd,
+		{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.then(function successCallback(response) {
+					$scope.error_editwork = false;
+                	console.log(response);
+                    $scope.success_editwork = true;
+                    $timeout( function(){ $scope.editWorkFunc(); }, 1000);
+                    $scope.getWorks();
+                  }, function errorCallback(response) {
+                    $scope.error_editwork = true;
+                  });
+
+	}
+
+
+
+
+	// upload delete work
+	$scope.upload_delete_work = function(){
+		var fd = new FormData()
+		angular.forEach($scope.files, function(file){
+			fd.append('work_logo', file);
+			fd.append('master', $scope.masterPk);
+			fd.append('work_desc', $scope.work_desc);
+		})
+		$http.delete('http://localhost:8000/salons/api/selfworks/edit/'+$scope.work_id+"/", fd,
+		{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.then(function successCallback(response) {
+                	console.log(response);
+                    $scope.success_deletework = true;
+                    $timeout( function(){ $scope.deleteWorkFunc(); }, 1000);
+                    $scope.getWorks();
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	}
+
+
+
+
+
+	// upload add service
+	$scope.upload_service = function(masterId){
+
+		 var postdata = {
+			service: $scope.selected.pk,
+			service_desc: $scope.service_desc,
+			service_price: $scope.service_price,
+		}
+
+		$scope.ArrServ=[];
+        for(var i=0;i<$scope.listservices.length;i++){
+            $scope.ArrServ.push($scope.listservices[i].pk);
+        }
+
+		$http({
+              url: 'http://localhost:8000/salons/api/services/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+
+            	$scope.ArrServ.push(response.data.pk);
+            	var salonServ = {
+            		master_services: $scope.ArrServ
+            	}
+            	var masterId = $cookies.get('master');
+            	$http({
+					  url: 'http://localhost:8000/salons/api/selfservices/edit/'+masterId+'/',
+					  method: 'PUT',
+					  data: salonServ,
+					  contentType:'application/json'
+					}).then(function successCallback(response2) {
+						$scope.success_addservice = true;
+						$timeout( function(){ $scope.addServicesFunc(); }, 1000);
+						$scope.getServices();
+						$scope.service_name=null;
+						$scope.service_price=null;
+					}, function errorCallback(response) {
+						console.log(response);
+					});
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+	}
+
+	// upload edit service
+	$scope.upload_edit_service = function(){
+
+       var postdata = {
+			pk: $scope.service_id,
+			service: $scope.selected.pk,
+			service_desc: $scope.service_desc,
+			service_price: $scope.service_price,
+		}
+
+		$http({
+              url: 'http://localhost:8000/salons/api/salonservices/edit/'+$scope.service_id+"/",
+              method: 'PUT',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+                	console.log(response);
+                    $scope.success_editservice = true;
+                    $timeout( function(){ $scope.editServiceFunc(); }, 1000);
+                    $scope.getServices();
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+	}
+
+	// upload delete service
+	$scope.upload_delete_service = function(){
+
+        var postdata = {
+			pk: $scope.service_id
+		}
+
+		$http({
+              url: 'http://localhost:8000/salons/api/salonservices/edit/'+$scope.service_id+"/",
+              method: 'DELETE',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+                	console.log(response);
+                    $scope.success_deleteservice = true;
+                    $timeout( function(){ $scope.deleteServiceFunc(); }, 1000);
+                    $scope.getServices();
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+	}
+
+
+	// upload addLike
+	$scope.addLike = function(workId, countLike, arrWhoLike){
+
+		arrWhoLike.push($cookies.get('pk'));
+
+		countLike++;
+		 var postdata = {
+			pk: workId,
+			work_like: countLike,
+			wholikeit: arrWhoLike
+		}
+		$http({
+              url: 'http://localhost:8000/salons/api/selflike/'+workId+'/',
+              method: 'PUT',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+            	$http.get('http://localhost:8000/salons/api/listselfworks/'+workId+'?format=json')
+                .then(function successCallback(response) {
+                	$scope.detailWorks = response.data;
+					$scope.mataNotLikeIt=true;
+                	for(var i=0; i<$scope.detailWorks.wholikeit.length; i++){
+						if($scope.detailWorks.wholikeit[i] == $cookies.get('pk')){
+							$scope.mataLikeIt = true;
+							$scope.mataNotLikeIt = false;
+						}
+					}
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+	}
+
+
+
+
+
+
+
+
+
+	//get list of works
+	$scope.getWorks = function(){
+
+		var masteId = $cookies.get('master');
+
+		if(masteId){
+		$http.get('http://localhost:8000/salons/api/selfworks/'+masteId+'?format=json')
+                .then(function successCallback(response) {
+                	console.log("List of owrkdkjnknj");
+                	console.log(response);
+                	if(response.data.length==0){
+                		$scope.nolistworks = true;
+                	}else{
+                		$scope.nolistworks = false;
+                	}
+                    $scope.listworks = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+		}
+
+
+	}
+	$scope.getWorks();
+
+
+
+		//get list of cat services
+	$http.get('http://localhost:8000/salons/api/saloncat/?format=json')
+                .then(function successCallback(response) {
+                	console.log("HOHHOHOH");
+                	console.log(response);
+                    $scope.listcat = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+		//get list of services for work
+	$http.get('http://localhost:8000/salons/api/salonscatservices/?format=json')
+                .then(function successCallback(response) {
+                    $scope.listservWork = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	  //get list of services
+
+    $scope.getServices = function(){
+		$http.get('http://localhost:8000/salons/api/selfservices/{{user.pk}}?format=json')
+                .then(function successCallback(response) {
+					console.log("WWW");
+					console.log(response.data);
+					$scope.listservices = [];
+                	for(var i=0;i<response.data.length;i++){
+                		for(var j=0;j<response.data[i].master_services.length;j++){
+							$http.get('http://localhost:8000/salons/api/services/'+response.data[i].master_services[j]+'?format=json')
+							.then(function successCallback(response) {
+								if(response.data.length==0){
+									$scope.nolistservices = true;
+								}else{
+									$scope.nolistservices = false;
+								}
+									$scope.listservices.push(response.data);
+							  }, function errorCallback(response) {
+								console.log('Error respond');
+							  });
+						}
+                	}
+					console.log("WWW 223");
+					console.log($scope.listservices);
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+	}
+
+	$scope.getServices();
+
+
+
+
+
+		$scope.addwork = true;
+	$scope.AddWorkFunc = function(){
+		$scope.addwork = !$scope.addwork;
+		$scope.success_addwork=false;
+		$scope.error_addwork=false;
+	}
+
+	$scope.deletework = true;
+	$scope.deleteWorkFunc = function(id){
+		$scope.work_id=id;
+		$scope.deletework = !$scope.deletework;
+		$scope.success_deletework=false;
+	}
+
+	$scope.deletemaster = true;
+	$scope.deleteMasterFunc = function(id){
+		$scope.master_id=id;
+		$scope.deletemaster = !$scope.deletemaster;
+		$scope.success_deletemaster=false;
+	}
+
+	$scope.editService = true;
+	$scope.editServiceFunc = function(id, name, price){
+		$scope.editService = !$scope.editService;
+		$scope.service_id=id;
+		$scope.service_desc=name;
+		$scope.service_price=price;
+		$scope.success_editservice=false;
+	}
+
+	$scope.deleteservice = true;
+	$scope.deleteServiceFunc = function(id){
+		$scope.service_id=id;
+		$scope.deleteservice = !$scope.deleteservice;
+		$scope.success_deleteservice=false;
+	}
+
+
+
+
+
+
+
+
+});
+salon.controller('OwnerCtrl', function($scope, $cookies, $http, $timeout, $window){
+
+	//create busy
+	$scope.upload_busy = function(){
+		var postdata = {
+			salon_author: $cookies.get('pk'),
+			city: $scope.salon_city,
+			name: $scope.salon_name,
+			salon_desc: $scope.salon_desc,
+			salon_contact: $scope.salon_contact,
+			salon_adress: $scope.salon_adress
+		}
+      $http({
+              url: 'http://localhost:8000/'+$scope.typeBusy+'/api/allcreate/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+
+
+
+					var fd = new FormData()
+					angular.forEach($scope.files, function(file){
+						fd.append('salon_logo', file)
+					})
+					$http.put('http://localhost:8000/salons/api/editimg/'+response.data.pk+'/', fd,
+					{
+						transformRequest: angular.identity,
+						headers: {'Content-Type': undefined,
+								'Authorization': $cookies.get('token')}
+					})
+					.then(function successCallback(response) {
+								$scope.success_busy = true;
+								$timeout( function(){ $scope.AddBusyFunc(); }, 1000);
+								$scope.freshBusy();
+								$scope.addValue(response.data.pk);
+							  }, function errorCallback(response) {
+								$scope.error_logo = true;
+							  });
+
+
+
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+
+salon.controller('UserCtrl', function($scope, $cookies, $http, $timeout, $window){
+
+
+
+	//post add fav master
+
+	$scope.addFavMaster = function(){
+
+		$http.get('http://localhost:8000/salons/api/bymaster/{{user.pk}}/?format=json')
+                .then(function successCallback(response) {
+
+					console.log("Has master in fav");
+					console.log(response);
+
+              		if(response.data.length==0){
+
+
+              			var postdata = {
+							master: {{user.pk}},
+							user: $cookies.get('pk')
+						}
+
+						$http({
+							  url: 'http://localhost:8000/salons/api/favmaster/',
+							  method: 'POST',
+							  data: postdata,
+							  contentType:'application/json'
+							}).then(function successCallback(response) {
+							   console.log("Add Fav Master");
+							   console.log(response.data);
+							   $scope.ItsNotFav=false;
+							   $scope.ItsMyFav=true;
+							}, function errorCallback(response) {
+								console.log(response);
+							});
+
+              		}
+
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+}
+
+
+
+
+	//get properties of favorite master
+
+	$scope.getFavMasterMaster = function(){
+
+
+		$http.get('http://localhost:8000/salons/api/wholovemaster/?format=json')
+									.then(function successCallback(response) {
+
+													$scope.NotArrFavMasters = true;
+													$scope.ArrFavMasters = false;
+										var me = $cookies.get('pk');
+										$scope.favmasters = [];
+										for(var i=0;i<response.data.length;i++){
+											for(var k=0;k<response.data[i].wholoveit.length;k++){
+												if(response.data[i].wholoveit[k]==me){
+														$scope.NotArrFavMasters = false;
+														$scope.ArrFavMasters = true;
+														$http.get('http://localhost:8000/salons/api/selfmaster/'+response.data[i].pk+'/?format=json')
+														.then(function successCallback(response2) {
+
+
+																$http.get('http://localhost:8000/salons/api/users/'+response2.data.master_author+'/?format=json')
+															.then(function successCallback(response3) {
+																	response2.data.master_pk = response3.data.pk;
+																	response2.data.name = response3.data.first_name+" "+response3.data.last_name;
+
+															  }, function errorCallback(response) {
+																console.log('Error respond');
+															  });
+															  $http.get('http://localhost:8000/salons/api/userlogo/list/'+response2.data.master_author+'/?format=json')
+															.then(function successCallback(response3) {
+
+																	response2.data.avatar = response3.data[0].avatar;
+
+															  }, function errorCallback(response) {
+																console.log('Error respond');
+															  });
+
+
+
+															$scope.favmasters.push(response2.data);
+
+														  }, function errorCallback(response) {
+															console.log('Error respond');
+														  });
+												}
+											}
+										}
+									  }, function errorCallback(response) {
+										console.log('Error respond');
+									  });
+	}
+
+
+	// upload delete fav master
+	$scope.upload_delete_favmaster = function(){
+
+		var indexElem = $scope.wholoveitMaster.indexOf($cookies.get('pk'));
+		$scope.wholoveitMaster.splice(indexElem);
+
+		console.log($scope.wholoveitMaster);
+
+
+        var postdata = {
+			wholoveit: $scope.wholoveitMaster
+		}
+
+		$http({
+              url: 'http://localhost:8000/salons/api/wholovemaster/edit/'+$scope.fav_master+"/",
+              method: 'PUT',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+                    $scope.success_deletefavmaster = true;
+                    $timeout( function(){ $scope.deleteFavMaster(); }, 1000);
+                    $scope.getFavMasterMaster();
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+	}
+
+	$scope.getFavMasterMaster();
+
+
+	$scope.deletefavmaster = true;
+	$scope.deleteFavMaster = function(favId, wholoveit){
+		$scope.fav_master = favId;
+		$scope.wholoveitMaster = wholoveit;
+		$scope.deletefavmaster = !$scope.deletefavmaster;
+		$scope.success_deletefavmaster=false;
+	}
+
+});
+
+
+
+
+
+salon.controller('FeedCtrl', function($scope, $cookies, $http, $timeout, $window){
+
+	$scope.FeedToogle=false;
+	$scope.ReadFeed = function(book){
+		console.log(book.cat);
+		var userdata = {
+			flag: 0
+		}
+
+		 $http({
+              url: 'http://localhost:8000/salons/api/bookedit/'+book.pk+'/',
+              method: 'PUT',
+              data: userdata,
+              headers: {
+              contentType:'application/json',
+			  'Authorization': $cookies.get('token')
+			  }
+            }).then(function successCallback(response) {
+            	$scope.GetCountFeed();
+            	/*$scope.FeedToogle=true;*/
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+	}
+
+
+	 $scope.GetCountFeed = function () {
+        	$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+				'Authorization': $cookies.get('token')}
+				}).then(function successCallback(responseSalon) {
+							$scope.newsCount = 0;
+							for(var i=0;i<responseSalon.data.length;i++){
+								for(var j=0;j<responseSalon.data[i].salon_book.length;j++){
+									$http({method: 'GET', url: 'http://localhost:8000/salons/api/salonbook/'+responseSalon.data[i].salon_book[j]+'/?format=json', headers: {
+									'Authorization': $cookies.get('token')}
+									}).then(function successCallback(response) {
+												$scope.newsCount += response.data.flag;
+											  }, function errorCallback(response) {
+												console.log('Error respond');
+											  });
+								}
+							}
+						  }, function errorCallback(response) {
+							console.log('Error respond');
+						  });
+		}
+
+
+	//get properties of busy
+	$scope.freshBusy = function(){
+		$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+		'Authorization': $cookies.get('token')}
+		}).then(function successCallback(response) {
+					console.log("My busy");
+                	console.log(response.data);
+					$scope.mysalons = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+	}
+
+
+
+		$scope.GetFeed = function(){
+
+			$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+			'Authorization': $cookies.get('token')}
+			}).then(function successCallback(responseSalon) {
+						console.log("My busy");
+						$scope.mysalons = responseSalon.data;
+						$scope.books = [];
+						$scope.newsCount = 0;
+						for(var i=0;i<responseSalon.data.length;i++){
+							for(var j=0;j<responseSalon.data[i].salon_book.length;j++){
+								$http({method: 'GET', url: 'http://localhost:8000/salons/api/salonbook/'+responseSalon.data[i].salon_book[j]+'/?format=json', headers: {
+								'Authorization': $cookies.get('token')}
+								}).then(function successCallback(response) {
+											console.log("My book")
+											console.log(response);
+
+												$http({method: 'GET', url: 'http://localhost:8000/salons/api/users/'+response.data.user+'/?format=json', headers: {
+												'Authorization': $cookies.get('token')}
+												}).then(function successCallback(response2) {
+															response.data.first_name = response2.data.first_name;
+															response.data.last_name = response2.data.last_name;
+															response.data.email = response2.data.email;
+														  }, function errorCallback(response) {
+															console.log('Error respond');
+														  });
+
+												$http({method: 'GET', url: 'http://localhost:8000/salons/api/userlogo/list/'+response.data.user+'/?format=json', headers: {
+												'Authorization': $cookies.get('token')}
+												}).then(function successCallback(response2) {
+															response.data.avatar = response2.data[0].avatar;
+														  }, function errorCallback(response) {
+															console.log('Error respond');
+														  });
+
+
+											for(var m=0;m<response.data.service.length;m++){
+												$http({method: 'GET', url: 'http://localhost:8000/salons/api/saloncat/'+response.data.service[m]+'/?format=json', headers: {
+												'Authorization': $cookies.get('token')}
+												}).then(function successCallback(response2) {
+															console.log("My busy cat");
+															console.log(response.data);
+															response.data.service.push(response2.data);
+														  }, function errorCallback(response) {
+															console.log('Error respond');
+														  });
+											}
+
+
+
+											$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+											'Authorization': $cookies.get('token')}
+											}).then(function successCallback(response2) {
+
+														for(var n=0; n<response2.data.length;n++){
+															for(var e=0; e<response2.data[n].salon_book.length;e++){
+																if(response.data.pk == response2.data[n].salon_book[e]){
+																	response.data.salon_name = response2.data[n].name;
+																	response.data.salon_pk = response2.data[n].pk;
+																}
+															}
+														}
+
+													  }, function errorCallback(response) {
+														console.log('Error respond');
+													  });
+
+
+											$scope.newsCount += response.data.flag;
+											$scope.books.push(response.data);
+											console.log("All book");
+											console.log($scope.newsCount);
+											console.log($scope.books);
+										  }, function errorCallback(response) {
+											console.log('Error respond');
+										  });
+							}
+						}
+						console.log("WHERE IS MY FEED?");
+						console.log($scope.books);
+					  }, function errorCallback(response) {
+						console.log('Error respond');
+					  });
+				}
+
+			$scope.GetFeed();
+
+
+});
+
+
+
+
+
+salon.directive('fileInput', ['$parse', function($parse){
+	return {
+		restrict: 'A',
+		link: function(scope, elm, attrs){
+			elm.bind('change', function(){
+				$parse(attrs.fileInput)
+				.assign(scope, elm[0].files)
+				scope.$apply()
+			})
+		}
+	}
+}]);
+
+
+
+
+salon.controller('divCtrl', function($scope, $http, $timeout, $cookies, $window){
+
+	$scope.NoneMaster=true;
+
+	$scope.startSearch = function(){
+				if($scope.why){
+					$window.location.href = 'http://localhost:8000/salons/sal#!/search/'+$scope.why;
+				}
+			}
+
+
+	$scope.news = $cookies.get('news');
+
+
+
+
+
+
+
+		$scope.autoGetMaster = function(){
+			$http({method: 'GET', url: 'http://localhost:8000/salons/api/getselfmaster/{{user.pk}}/?format=json', headers: {
+			'Authorization': $cookies.get('token')}
+			}).then(function successCallback(response) {
+						console.log("showModeMaster");
+						console.log(response);
+						if(response.data.length!=0){
+							$scope.masterPk = response.data[0].pk;
+							$scope.masterFeedback = response.data[0].master_feedback;
+
+							$scope.getSelfValue();
+							$scope.getRankingStar();
+
+
+
+
+					console.log("MASTER");
+					console.log(response.data[0].master_feedback);
+
+
+							// get feedback of salon
+					$scope.haveMasterFeedback=true;
+					$scope.masterFeedbacks = [];
+					for(var i=0; i<$scope.masterFeedback.length; i++){
+						$http.get('http://localhost:8000/salons/api/masterfeedback/'+$scope.masterFeedback[i]+'/?format=json')
+								.then(function successCallback(res) {
+
+											// get user of feedback
+												$http.get('http://localhost:8000/salons/api/users/'+res.data.user+'/?format=json')
+														.then(function successCallback(response3) {
+															res.data.first_name = response3.data.first_name;
+															res.data.last_name = response3.data.last_name;
+														  }, function errorCallback(response) {
+															console.log('Error respond');
+														  });
+
+
+											// get user of feedback
+												$http.get('http://localhost:8000/salons/api/userlogo/list/'+res.data.user+'/?format=json')
+														.then(function successCallback(response3) {
+															res.data.avatar = response3.data[0].avatar;
+														  }, function errorCallback(response) {
+															console.log('Error respond');
+														  });
+
+									$scope.masterFeedbacks.push(res.data);
+
+								  }, function errorCallback(response) {
+									console.log('Error respond');
+								  });
+					}
+
+									if($scope.masterFeedbacks.length==0){
+										$scope.haveMasterFeedback=false;
+									}
+
+
+
+
+								$scope.ItsNotFavMas=true;
+								$scope.ItsMyFavMas=false;
+								$http.get('http://localhost:8000/salons/api/wholovemaster/'+$scope.masterPk+'/?format=json')
+									.then(function successCallback(response) {
+										var me = $cookies.get('pk');
+										for(var k=0;k<response.data.wholoveit.length;k++){
+											if(response.data.wholoveit[k]==me){
+												$scope.ItsNotFavMas=false;
+												$scope.ItsMyFavMas=true;
+											}
+										}
+									  }, function errorCallback(response) {
+										console.log('Error respond');
+									  });
+
+
+
+
+							$scope.wholoveit = response.data[0].wholoveit;
+
+								//get city of master
+									$http.get('http://localhost:8000/salons/api/getcity/'+response.data[0].city+'/?format=json')
+												.then(function successCallback(response) {
+													console.log("City");
+													console.log(response);
+													$scope.cityOfMaster = response.data.name;
+												}, function errorCallback(response) {
+													console.log('Error respond');
+												});
+
+
+							$cookies.put('master', $scope.masterPk);
+							console.log("showModeMaster");
+							console.log(response);
+							$scope.EmptyMaster = true;
+							$scope.NoneMaster = false;
+							$scope.IfModeMaster = true;
+							$scope.IfModeOwner = false;
+							$scope.IfModeUser = false;
+						}else{
+							$scope.EmptyMaster = false;
+							$scope.IfModeMaster = false;
+							$scope.IfModeOwner = false;
+							$scope.IfModeUser = false;
+						}
+
+					  }, function errorCallback(response) {
+							console.log('Error respond');
+					  });
+		}
+
+		$scope.autoGetMaster();
+
+
+
+
+
+
+
+	//post add fav salon
+
+	$scope.addFavSalon = function(usersWhoLoveIt){
+
+		console.log($scope.masterPk);
+		console.log(usersWhoLoveIt);
+		usersWhoLoveIt.push($cookies.get('pk'));
+		var postdata = {
+			wholoveit: usersWhoLoveIt
+		}
+
+		$http({
+			url: 'http://localhost:8000/salons/api/wholovemaster/edit/'+$scope.masterPk+'/',
+			method: 'PUT',
+			data: postdata,
+			contentType:'application/json'
+		}).then(function successCallback(response) {
+			$scope.autoGetMaster();
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+
+	}
+
+
+
+
+
+
+
+
+
+
+	$scope.AddMaster = function(){
+
+		var userdata = {
+			first_name: $scope.first_name,
+			last_name: $scope.last_name,
+		}
+
+      $http({
+              url: 'http://localhost:8000/salons/api/user/edit/'+{{user.pk}}+'/',
+              method: 'PUT',
+              data: userdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+                console.log("Post user");
+                console.log(response.data);
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+			var fd = new FormData()
+			angular.forEach($scope.files, function(file){
+			fd.append('avatar', file);
+			fd.append('user', {{user.pk}});
+			fd.append('contact', $scope.contact);
+			fd.append('adress', $scope.adress);
+			});
+			$http.put('http://localhost:8000/salons/api/profile/edit/'+$scope.profile.pk+"/", fd,
+			{
+				transformRequest: angular.identity,
+				headers: {'Content-Type': undefined}
+			}).then(function successCallback(response) {
+
+                console.log("Put profile");
+                console.log(response.data);
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+
+		var masterdata = {
+			master_author: {{user.pk}},
+			city: $scope.city
+		};
+
+
+     	$http({
+              url: 'http://localhost:8000/salons/api/justselfmaster/',
+              method: 'POST',
+              data: masterdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+				console.log("Post master");
+                console.log(response.data);
+
+                $scope.AddMasterFunc();
+				$scope.success_addmaster=true;
+
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// regidtration
+	$scope.reg_in = function(){
+
+
+        var postdata = {
+			username: $scope.usernameReg,
+			email: $scope.emailReg,
+			password: $scope.passwordReg,
+			repassword: $scope.repasswordReg
+		}
+
+
+		$http({
+              url: 'http://127.0.0.1:8000/salons/api/register/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+				console.log(response)
+
+				$http.get('http://localhost:8000/salons/api/usergetpk/'+$scope.usernameReg+'?format=json')
+                .then(function successCallback(response) {
+                	$scope.pkdata = response.data[0].pk;
+
+                	var profiledata = {
+						pk: $scope.pkdata,
+						user: $scope.pkdata
+					}
+
+					 $http({
+						  url: 'http://localhost:8000/salons/api/postprofile/post/',
+						  method: 'POST',
+						  data: profiledata,
+						  contentType:'application/json'
+						}).then(function successCallback(response) {
+							console.log("Accept in Profile post")
+							console.log(response);
+						}, function errorCallback(response) {
+							console.log(response);
+						});
+
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+
+
+			//$scope.come_in();
+
+
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+	}
+
+
+
+	// user login
+	$scope.come_in = function(){
+
+
+        var postdata = {
+			username: $scope.usernameReg,
+			password: $scope.passwordReg
+		}
+
+
+		$http({
+              url: 'http://127.0.0.1:8000/salons/api-token-auth/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+
+            	$http.get('http://localhost:8000/salons/api/usergetpk/'+$scope.usernameReg+'?format=json')
+                .then(function successCallback(response) {
+                	$cookies.put('pk', response.data[0].pk, {path: '/'});
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+
+                 var token = response.data.token;
+                 $cookies.put('username', $scope.usernameReg, {path: '/'});
+                 $cookies.put('token', token, {path: '/'});
+
+                 $timeout( function(){ $scope.AuthReg(); }, 100);
+
+                 $timeout( function(){  $scope.toBeOrNotToBe(); }, 200);
+                 $timeout( function(){ $scope.getUser(); }, 200);
+
+				$scope.usernameReg = null;
+				$scope.passwordReg = null;
+
+                $timeout( function(){
+                 	$window.location.href = 'http://localhost:8000/salons/profile/'+$cookies.get('pk');
+                }, 500);
+
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+	}
+
+	// Logout
+
+	$scope.Logout = function(){
+		 $cookies.remove('username', {path: '/'});
+         $cookies.remove('token', {path: '/'});
+         $cookies.remove('pk', {path: '/'});
+         $timeout( function(){  $scope.toBeOrNotToBe(); }, 200);
+         $timeout( function(){ $scope.getUser(); }, 200);
+          $timeout( function(){
+                 	$window.location.reload();
+          }, 500);
+	}
+
+
+
+
+
+	$scope.filesChanged = function(elm){
+		$scope.files = elm.files;
+		$scope.$apply();
+	}
+
+	// upload logo user
+	$scope.upload = function(){
+		var fd = new FormData()
+		angular.forEach($scope.files, function(file){
+			fd.append('user', {{user.pk}})
+			fd.append('avatar', file)
+		})
+		$http.put('http://localhost:8000/salons/api/userlogo/edit/'+$scope.profile.pk+'/', fd,
+		{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.then(function successCallback(response) {
+                	console.log(response);
+                    $scope.userlogo = response.data;
+                    $timeout( function(){ $scope.editLogoFunc(); }, 1000);
+                    $scope.success_logo = true;
+                  }, function errorCallback(response) {
+                    $scope.error_logo = true;
+                  });
+
+	}
+
+
+
+
+
+
+
+
+	//edit master
+	$scope.EditMaster = function(){
+
+
+			var userdata = {
+			first_name: $scope.first_name,
+			last_name: $scope.last_name,
+		}
+
+      $http({
+              url: 'http://localhost:8000/salons/api/user/edit/'+{{user.pk}}+'/',
+              method: 'PUT',
+              data: userdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+
+                console.log("Put user");
+                console.log(response.data);
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+			var fd = new FormData()
+			angular.forEach($scope.files, function(file){
+			fd.append('avatar', file);
+			fd.append('user', {{user.pk}});
+			fd.append('contact', $scope.contact);
+			fd.append('adress', $scope.adress);
+			});
+			$http.put('http://localhost:8000/salons/api/profile/edit/'+$scope.profile.pk+"/", fd,
+			{
+				transformRequest: angular.identity,
+				headers: {'Content-Type': undefined}
+			}).then(function successCallback(response) {
+
+                console.log("Put profile");
+                console.log(response.data);
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+
+		var masterdata = {
+			master_author: {{user.pk}},
+			city: $scope.city
+		};
+
+		var masterId = $cookies.get('master');
+
+     	$http({
+              url: 'http://localhost:8000/salons/api/selfmaster/edit/'+masterId+'/',
+              method: 'PUT',
+              data: masterdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+				$scope.autoGetMaster();
+				$scope.getAvatar();
+				$scope.getUser();
+				$scope.success_user=true;
+				$scope.editUserFunc();
+				console.log("Put master");
+                console.log(response.data);
+
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// get image of user
+	$scope.getAvatar = function(){
+		$http({method: 'GET', url: 'http://localhost:8000/salons/api/userlogo/list/{{user.pk}}/?format=json', headers: {
+		'Authorization': $cookies.get('token')}
+		}).then(function successCallback(response) {
+						console.log(response);
+						$scope.userlogo = response.data[0];
+					  }, function errorCallback(response) {
+						console.log('Error respond');
+					  });
+	}
+
+	$scope.getAvatar();
+
+	//get properties of user
+
+	$scope.getUser = function(){
+
+		$http.get('http://localhost:8000/salons/api/users/{{user.pk}}/?format=json')
+                .then(function successCallback(response) {
+                	console.log(response);
+                    $scope.user = response.data;
+
+					$scope.pk = $scope.user.pk;
+					$scope.username = $scope.user.username;
+                    $scope.first_name=$scope.user.first_name;
+					$scope.last_name=$scope.user.last_name;
+					$scope.email=$scope.user.email;
+
+
+					$scope.me_pk = $cookies.get('pk');
+
+							if($scope.pk==$scope.me_pk){
+								$scope.myBusy=true;
+								$scope.notMyBusy=false;
+							}else{
+								$scope.notMyBusy=true;
+								$scope.myBusy=false;
+							}
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	}
+
+
+	$http.get('http://localhost:8000/salons/api/users/{{user.pk}}/?format=json')
+                .then(function successCallback(response) {
+                	console.log(response);
+                    $scope.user = response.data;
+
+					$scope.pk = $scope.user.pk;
+					$scope.username = $scope.user.username;
+                    $scope.first_name=$scope.user.first_name;
+					$scope.last_name=$scope.user.last_name;
+					$scope.email=$scope.user.email;
+
+
+					$scope.me_pk = $cookies.get('pk');
+
+							if($scope.pk==$scope.me_pk){
+								$scope.myBusy=true;
+								$scope.notMyBusy=false;
+							}else{
+								$scope.notMyBusy=true;
+								$scope.myBusy=false;
+							}
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+
+
+
+
+ 	//get properties of profile
+	$http.get('http://localhost:8000/salons/api/listprofile/list/{{user.pk}}/?format=json')
+                .then(function successCallback(response) {
+                	console.log("Profile data");
+                	console.log(response);
+                	console.log("end data");
+                    $scope.profile = response.data[0];
+
+                    $scope.contact=$scope.profile.contact;
+					$scope.adress=$scope.profile.adress;
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	//get properties of busy
+	$scope.freshBusy = function(){
+
+		$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+		'Authorization': $cookies.get('token')}
+		}).then(function successCallback(response) {
+					console.log("Get properties of busy");
+                	console.log(response.data);
+					$scope.mysalons = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	}
+
+		$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+		'Authorization': $cookies.get('token')}
+		}).then(function successCallback(response) {
+					console.log("Get properties of busy");
+                	console.log(response.data);
+					$scope.mysalons = response.data;
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+
+
+
+
+
+	//get properties of favorite salon
+
+	$scope.getFavSalon = function(){
+
+		$http.get('http://localhost:8000/salons/api/favsalon/{{user.pk}}/?format=json')
+                .then(function successCallback(response) {
+
+
+
+					if(response.data.length==0){
+						$scope.NotArrFavSalons = true;
+						$scope.ArrFavSalons = false;
+					}else{
+						$scope.NotArrFavSalons = false;
+						console.log("Favourite salons");
+						console.log(response);
+
+						$scope.ArrFavSalons = [];
+						for(var i=0; i<response.data.length; i++){
+							var favsalonId = response.data[i].pk
+							$http.get('http://localhost:8000/salons/api/salFav/'+response.data[i].salon+'?format=json')
+							.then(function successCallback(response) {
+								console.log("Salon from fav");
+								response.data.salon_contact = favsalonId;
+								$scope.ArrFavSalons.push(response.data);
+								console.log($scope.ArrFavSalons);
+							  }, function errorCallback(response) {
+								console.log('Error respond');
+							  });
+						}
+					}
+
+
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	}
+
+
+
+
+
+
+	// upload delete fav salon
+	$scope.upload_delete_favsalon = function(){
+
+        var postdata = {
+			salon: $scope.fav_salon
+		}
+
+		$http({
+              url: 'http://localhost:8000/salons/api/favsalon/edit/'+$scope.fav_salon+"/",
+              method: 'DELETE',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+                	console.log(response);
+                    $scope.success_deletefavsalon = true;
+                    $timeout( function(){ $scope.deleteFavSalon(); }, 1000);
+                    $scope.getFavSalon();
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+	}
+
+
+
+
+
+
+
+	$scope.getFavSalon();
+
+
+	var randnumber = Math.floor((Math.random()*14)+1);
+
+	$scope.BackRand = function(){
+    	return randnumber;
+  	};
+
+
+
+
+
+
+
+
+	if($cookies.get('pk')){
+		$scope.yesauth = true;
+		$scope.noauth = false;
+		if($cookies.get('pk')=={{user.pk}}){
+			$scope.IfModeOwner = false;
+			$scope.IfModeMaster = false;
+			$scope.IfModeUser = true;
+			$scope.yesItsMe = true;
+			$scope.noItsMe = false;
+		}else{
+			$scope.IfModeOwner = false;
+			$scope.IfModeUser = false;
+			$scope.IfModeMaster = true;
+			$scope.yesItsMe = false;
+			$scope.noItsMe = true;
+		}
+	}else{
+		$scope.noauth = true;
+		$scope.yesauth = false;
+		$scope.IfModeOwner = false;
+		$scope.IfModeUser = false;
+		$scope.IfModeMaster = true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	$scope.addmaster = true;
+	$scope.AddMasterFunc = function(){
+		$scope.addmaster=!$scope.addmaster;
+	}
+
+	$scope.addwork = true;
+	$scope.AddWorkFunc = function(){
+		$scope.addwork = !$scope.addwork;
+		$scope.success_addwork=false;
+		$scope.error_addwork=false;
+	}
+
+
+	$scope.editWork = true;
+	$scope.editWorkFunc = function(id, desc){
+		$scope.editWork = !$scope.editWork;
+		$scope.work_id=id;
+		$scope.work_desc=desc;
+		$scope.success_editwork=false;
+		$scope.error_editwork=false;
+	}
+
+	$scope.deletework = true;
+	$scope.deleteWorkFunc = function(id){
+		$scope.work_id=id;
+		$scope.deletework = !$scope.deletework;
+		$scope.success_deletework=false;
+	}
+
+
+
+
+	$scope.deletefavsalon = true;
+	$scope.deleteFavSalon = function(favId){
+		$scope.fav_salon = favId;
+		$scope.deletefavsalon = !$scope.deletefavsalon;
+		$scope.success_deletefavsalon=false;
+	}
+
+
+
+
+
+
+    $scope.showMenu = true;
+    var toogle = false;
+    $scope.menuShowHide = function(){
+        $scope.showMenu = toogle;
+        toogle=!toogle;
+    }
+
+	$scope.editUser = true;
+	$scope.editUserFunc = function(){
+		$scope.editUser = !$scope.editUser;
+		$scope.success_user=false;
+	}
+
+
+	$scope.editMaster = true;
+	$scope.editMasterFunc = function(id, name, desc){
+		$scope.editMaster = !$scope.editMaster;
+		console.log(id);
+		$scope.master_id=id;
+		$scope.master_name=name;
+		$scope.master_desc=desc;
+		$scope.success_editmaster=false;
+		$scope.error_editmaster=false;
+	}
+
+	$scope.editWork = true;
+	$scope.editWorkFunc = function(id, desc){
+		$scope.editWork = !$scope.editWork;
+		$scope.work_id=id;
+		$scope.work_desc=desc;
+		$scope.success_editwork=false;
+		$scope.error_editwork=false;
+	}
+
+	$scope.editAction = true;
+	$scope.editActionFunc = function(){
+		$scope.editAction = !$scope.editAction;
+	}
+
+	$scope.addServices = true;
+	$scope.addServicesFunc = function(){
+		$scope.addServices = !$scope.addServices;
+		$scope.success_addservice=false;
+	}
+
+
+	$scope.editLogo = true;
+	$scope.editLogoFunc = function(){
+		$scope.editLogo = !$scope.editLogo;
+		$scope.success_logo=false;
+	}
+
+	$scope.addbusy = true;
+	$scope.AddBusyFunc = function(){
+		$scope.addbusy = !$scope.addbusy;
+		$scope.success_addbusy=false;
+		$scope.error_addbusy=false;
+	}
+
+	$scope.addwork = true;
+	$scope.AddWorkFunc = function(){
+		$scope.addwork = !$scope.addwork;
+		$scope.success_addwork=false;
+		$scope.error_addwork=false;
+	}
+
+	$scope.deletework = true;
+	$scope.deleteWorkFunc = function(id){
+		$scope.work_id=id;
+		$scope.deletework = !$scope.deletework;
+		$scope.success_deletework=false;
+	}
+
+	$scope.deletemaster = true;
+	$scope.deleteMasterFunc = function(id){
+		$scope.master_id=id;
+		$scope.deletemaster = !$scope.deletemaster;
+		$scope.success_deletemaster=false;
+	}
+
+	$scope.editService = true;
+	$scope.editServiceFunc = function(id, name, price){
+		$scope.editService = !$scope.editService;
+		$scope.service_id=id;
+		$scope.service_desc=name;
+		$scope.service_price=price;
+		$scope.success_editservice=false;
+	}
+
+	$scope.deleteservice = true;
+	$scope.deleteServiceFunc = function(id){
+		$scope.service_id=id;
+		$scope.deleteservice = !$scope.deleteservice;
+		$scope.success_deleteservice=false;
+	}
+
+
+
+
+
+
+	$scope.IfshowModeMaster = true;
+	$scope.showModeMaster = function(){
+		$scope.IfshowModeMaster = !$scope.IfshowModeMaster;
+		$scope.success_master = false;
+	}
+
+
+
+
+
+
+
+
+
+	if($cookies.get('token')){
+		$scope.isAuth = true;
+		$scope.isNotAuth = false;
+	}else{
+		$scope.isAuth = false;
+		$scope.isNotAuth = true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$scope.authReg = true;
+	$scope.AuthReg = function(){
+		$scope.authReg = !$scope.authReg;
+	}
+
+	$scope.reg = true;
+	$scope.Reg = function(){
+		$scope.reg = !$scope.reg;
+	}
+
+
+
+
+	$scope.toBeOrNotToBe = function(){
+		var yes = $cookies.get('token');
+		if(yes){
+			$scope.inHome=true;
+			$scope.outHome=false;
+			$scope.decoUsername = $cookies.get('username');
+		}else{
+			$scope.inHome=false;
+			$scope.outHome=true;
+		}
+	}
+
+
+	$scope.toBeOrNotToBe();
+
+
+
+
+
+	$scope.editvalue = true;
+	$scope.editValue = function(){
+		if($cookies.get('token')){
+			successValueAccept=null;
+			$scope.editvalue = !$scope.editvalue;
+			$scope.successValue = false;
+		}
+	}
+
+
+	$scope.ifBook = true;
+	$scope.book = function(){
+		if($cookies.get('token')){
+			$scope.ifBook = !$scope.ifBook;
+			$scope.successBook = false;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$scope.getRankingStar = function(){
+
+
+
+	$http.get('http://localhost:8000/salons/api/selfvalues/'+$scope.masterPk+'?format=json')
+                .then(function successCallback(response) {
+
+					$scope.pkVal = response.data[0].pk,
+                	$scope.masterVal = response.data[0].master,
+					$scope.servicevalueVal = response.data[0].servicevalue,
+					$scope.workvalueVal = response.data[0].workvalue,
+					$scope.sumvalueVal = response.data[0].sumvalue,
+					$scope.countVal = response.data[0].count
+					$scope.whoValueIt = response.data[0].whovalueit
+
+
+					$scope.Oldservicestar = [
+						{value: 1, hover: false},
+						{value: 2, hover: false},
+						{value: 3, hover: false},
+						{value: 4, hover: false},
+						{value: 5, hover: false}
+					]
+
+					$scope.OldworkvalueVal = [
+						{value: 1, hover: false},
+						{value: 2, hover: false},
+						{value: 3, hover: false},
+						{value: 4, hover: false},
+						{value: 5, hover: false}
+					]
+
+					$scope.OldsumvalueVal = [
+						{value: 1, hover: false},
+						{value: 2, hover: false},
+						{value: 3, hover: false},
+						{value: 4, hover: false},
+						{value: 5, hover: false}
+					]
+
+
+					for(var i=0; i<$scope.servicevalueVal;i++){
+						$scope.Oldservicestar[i].hover=true;
+						var id=i+1;
+						angular.element(document.querySelector("#OldstarOne"+id)).removeClass("fa-star");
+						angular.element(document.querySelector("#OldstarOne"+id)).addClass("fa-star-o");
+					}
+					for(var i=0; i<$scope.workvalueVal;i++){
+						$scope.OldworkvalueVal[i].hover=true;
+						var id=i+1;
+						angular.element(document.querySelector("#OldstarTwo"+id)).removeClass("fa-star");
+						angular.element(document.querySelector("#OldstarTwo"+id)).addClass("fa-star-o");
+					}
+					for(var i=0; i<$scope.sumvalueVal;i++){
+						$scope.OldsumvalueVal[i].hover=true;
+						var id=i+1;
+						angular.element(document.querySelector("#OldstarThree"+id)).removeClass("fa-star-o");
+					}
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+	}
+
+
+
+
+		$scope.servicestar = [
+			{value: 1, hover: false},
+			{value: 2, hover: false},
+			{value: 3, hover: false},
+			{value: 4, hover: false},
+			{value: 5, hover: false}
+		];
+
+		$scope.hoverValueService = function(value){
+			for(var i=0;i<value;i++){
+				$scope.servicestar[i].hover=true;
+				var id=i+1;
+				angular.element(document.querySelector("#starOne"+id)).removeClass("fa-star-o");
+				angular.element(document.querySelector("#starOne"+id)).addClass("fa-star");
+			}
+		}
+		$scope.outValueService = function(){
+			for(var i=0;i<$scope.servicestar.length;i++){
+				$scope.servicestar[i].hover=false;
+				var id=i+1;
+
+				angular.element(document.querySelector("#starOne"+id)).removeClass("fa-star");
+				angular.element(document.querySelector("#starOne"+id)).addClass("fa-star-o");
+			}
+		}
+
+		$scope.setValueService = function(value){
+			for(var i=0;i<$scope.servicestar.length;i++){
+				$scope.servicestar[i].hover=false;
+				var id=i+1;
+				angular.element(document.querySelector("#starOne"+id)).removeClass("fa-star");
+				angular.element(document.querySelector("#starOne"+id)).addClass("fa-star-o");
+			}
+			for(var i=0;i<value;i++){
+				$scope.servicestar[i].hover=true;
+				var id=i+1;
+				angular.element(document.querySelector("#starOne"+id)).removeClass("fa-star-o");
+				angular.element(document.querySelector("#starOne"+id)).addClass("fa-star");
+			}
+			$scope.outValueService=null;
+			$scope.hoverValueService=null;
+			$scope.requiredOne = true;
+
+			$scope.valueOne=value;
+		}
+
+
+
+
+
+
+
+
+
+		$scope.workstar = [
+			{value: 1, hover: false},
+			{value: 2, hover: false},
+			{value: 3, hover: false},
+			{value: 4, hover: false},
+			{value: 5, hover: false}
+		];
+
+		$scope.hoverValueWork = function(value){
+			for(var i=0;i<value;i++){
+				$scope.workstar[i].hover=true;
+				var id=i+1;
+				angular.element(document.querySelector("#starTwo"+id)).removeClass("fa-star-o");
+				angular.element(document.querySelector("#starTwo"+id)).addClass("fa-star");
+			}
+		}
+		$scope.outValueWork = function(){
+			for(var i=0;i<$scope.workstar.length;i++){
+				$scope.workstar[i].hover=false;
+				var id=i+1;
+
+				angular.element(document.querySelector("#starTwo"+id)).removeClass("fa-star");
+				angular.element(document.querySelector("#starTwo"+id)).addClass("fa-star-o");
+			}
+		}
+
+		$scope.setValueWork = function(value){
+			for(var i=0;i<$scope.workstar.length;i++){
+				$scope.workstar[i].hover=false;
+				var id=i+1;
+				angular.element(document.querySelector("#starTwo"+id)).removeClass("fa-star");
+				angular.element(document.querySelector("#starTwo"+id)).addClass("fa-star-o");
+			}
+			for(var i=0;i<value;i++){
+				$scope.workstar[i].hover=true;
+				var id=i+1;
+				angular.element(document.querySelector("#starTwo"+id)).removeClass("fa-star-o");
+				angular.element(document.querySelector("#starTwo"+id)).addClass("fa-star");
+			}
+			$scope.outValueWork=null;
+			$scope.hoverValueWork=null;
+			$scope.requiredTwo = true;
+
+			$scope.valueTwo = value;
+		}
+
+
+
+
+
+
+		$scope.uploadAllValues = function(){
+			console.log("mme");
+			console.log($scope.whoValueIt);
+			if($scope.whoValueIt){
+				$scope.doItOrNo = true;
+				for(var i=0; i<$scope.whoValueIt.length;i++){
+					if($scope.whoValueIt[i]==$cookies.get('pk')){
+						$scope.doItOrNo = false;
+					}
+				}
+				if($scope.doItOrNo){
+				$scope.whoValueIt.push($cookies.get('pk'));
+
+				console.log($scope.valueOne);
+				console.log($scope.valueTwo);
+
+				var nullCountVal = $scope.countVal;
+				if($scope.countVal==0){
+					$scope.countVal=1;
+				}
+				if($scope.servicevalueVal==0){
+					$scope.servicevalueVal=1;
+					var nullServiceVal = 0;
+				}else{
+					var nullServiceVal = $scope.servicevalueVal;
+				}
+				if($scope.workvalueVal==0){
+					$scope.workvalueVal=1;
+					var nullWorkVal = 0;
+				}else{
+					var nullWorkVal = $scope.workvalueVal;
+				}
+				if($scope.sumvalueVal==0){
+					$scope.sumvalueVal=1;
+					var nullSumVal = 0;
+				}else{
+					var nullSumVal = $scope.sumvalueVal;
+				}
+
+
+				var CountService = $scope.countVal;
+				var AllService = nullServiceVal*CountService;
+				var ResService = parseInt((AllService+$scope.valueOne)/(nullCountVal+1));
+
+				var CountWork = $scope.countVal;
+				var AllWork = nullWorkVal*CountWork;
+				var ResWork = parseInt((AllWork+$scope.valueTwo)/(nullCountVal+1));
+
+				var ValueSum = ($scope.valueOne+$scope.valueTwo)/2;
+				var CountSum = $scope.countVal;
+				var AllSum = nullSumVal*CountSum;
+				var ResSum = parseInt((AllSum+ValueSum)/(nullCountVal+1));
+
+				if(nullCountVal==0){
+					var newCount=1;
+				}else{
+					var newCount = $scope.countVal+1;
+				}
+				console.log("Result");
+				console.log(ResService);
+				console.log(ResWork);
+				console.log(ResSum);
+				console.log(newCount);
+				var postdata = {
+					master: $scope.masterVal,
+					servicevalue: ResService,
+					workvalue: ResWork,
+					sumvalue: ResSum,
+					count: newCount,
+					whovalueit: $scope.whoValueIt
+				}
+
+				$http({
+					  url: 'http://localhost:8000/salons/api/selfvalues/edit/'+$scope.pkVal+'/',
+					  method: 'PUT',
+					  data: postdata,
+					  contentType:'application/json'
+					}).then(function successCallback(response) {
+							console.log("Success values");
+							$scope.getRankingStar();
+							$timeout( function(){ $scope.editValue(); }, 1000);
+							$scope.successValueAccept = true;
+					}, function errorCallback(response) {
+						console.log(response);
+					});
+				}else{
+					$scope.ToValueError = "Вы уже оценивали этот салон";
+				}
+			}else{
+			$scope.whoValueIt = [];
+			$scope.whoValueIt.push($cookies.get('pk'));
+				console.log("FirstTime Ranking");
+				console.log($scope.valueOne);
+				console.log($scope.valueTwo);
+
+				var sumvalue = parseInt(($scope.valueOne+$scope.valueTwo)/2);
+
+				var postdata = {
+					master: $scope.masterPk,
+					servicevalue: $scope.valueOne,
+					workvalue: $scope.valueTwo,
+					sumvalue: sumvalue,
+					count: 1,
+					whovalueit: $scope.whoValueIt
+				}
+
+				$http({
+					  url: 'http://localhost:8000/salons/api/salonsvalues/',
+					  method: 'POST',
+					  data: postdata,
+					  contentType:'application/json'
+					}).then(function successCallback(response) {
+							$scope.getSelfValue();
+							console.log("Success values");
+							$scope.getRankingStar();
+							$timeout( function(){ $scope.editValue(); }, 1000);
+							$scope.successValueAccept = true;
+					}, function errorCallback(response) {
+						console.log(response);
+					});
+
+			}
+
+		}//end func
+
+
+
+
+
+		$scope.getSelfValue = function(){
+
+			$http.get('http://localhost:8000/salons/api/selfvalues/'+$scope.masterPk+'?format=json')
+                .then(function successCallback(response) {
+                	console.log("Get Values Ranking Rank");
+                	console.log(response);
+
+					$scope.pkVal = response.data[0].pk,
+                	$scope.masterVal = response.data[0].master,
+					$scope.servicevalueVal = response.data[0].servicevalue,
+					$scope.workvalueVal = response.data[0].workvalue,
+					$scope.sumvalueVal = response.data[0].sumvalue,
+					$scope.countVal = response.data[0].count
+					$scope.whoValueIt = response.data[0].whovalueit
+
+
+                  }, function errorCallback(response) {
+                    console.log('Error respond');
+                  });
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// upload feedback
+	$scope.feedback = function(dataFeedback){
+
+
+        var postdata = {
+        	user: $cookies.get('pk'),
+			feedback: $scope.feedbackData
+		}
+
+		$http({
+              url: 'http://localhost:8000/salons/api/postfeedback/',
+              method: 'POST',
+              data: postdata,
+              contentType:'application/json'
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                dataFeedback.push(response.data.pk);
+                var dataSeri = {
+                	pk:$scope.masterPk,
+                	master_feedback:dataFeedback
+                };
+					$http({
+							  url: 'http://localhost:8000/salons/api/editSelfFeedback/'+$scope.masterPk+'/',
+							  method: 'PUT',
+							  data: dataSeri,
+							  contentType:'application/json'
+							}).then(function successCallback(response) {
+								$scope.successFeedback = true;
+							   $scope.autoGetMaster();
+							   $timeout( function(){ $scope.editValue(); }, 1000);
+							}, function errorCallback(response) {
+								console.log(response);
+							});
+
+
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+	}
+
+
+
+
+	$scope.modeUser = function(){
+		$scope.NoneMaster=true;
+	}
+	$scope.modeOwner = function(){
+		$scope.NoneMaster=true;
+	}
+	$scope.modeMaster = function(){
+		$scope.NoneMaster=false;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+salon.controller('HeadCtrl', function($scope, $http, $timeout, $cookies, $window){
+
+
+		 $scope.GetCountFeed = function () {
+        	$http({method: 'GET', url: 'http://localhost:8000/salons/api/mylist/{{user.pk}}/?format=json', headers: {
+				'Authorization': $cookies.get('token')}
+				}).then(function successCallback(responseSalon) {
+							$scope.newsCount = 0;
+							for(var i=0;i<responseSalon.data.length;i++){
+								for(var j=0;j<responseSalon.data[i].salon_book.length;j++){
+									$http({method: 'GET', url: 'http://localhost:8000/salons/api/salonbook/'+responseSalon.data[i].salon_book[j]+'/?format=json', headers: {
+									'Authorization': $cookies.get('token')}
+									}).then(function successCallback(response) {
+												$scope.newsCount += response.data.flag;
+											  }, function errorCallback(response) {
+												console.log('Error respond');
+											  });
+								}
+							}
+						  }, function errorCallback(response) {
+							console.log('Error respond');
+						  });
+		}
+
+
+
+	$scope.GetCountFeed();
+
+
+});
+
+
+	</script>
+
+
+</body>
+</html>
+

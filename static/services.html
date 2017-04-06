@@ -1,0 +1,41 @@
+
+			<h1>Услуги салонов</h1>
+
+            <div>
+                <button type="button" ng-click="chooseAllFunc(categoriesOfService, servicebycat)"  ng-class="chooseAll">Все услуги</button>
+                <br/><br/>
+                <button type="button" ng-click="chooseCatWork(categoriesOfService, serv)" class="NoChooseCat" ng-class="serv.choose" ng-repeat="serv in categoriesOfService">[[serv.cat_name]]</button>
+                <br/><br/>
+                <button ng-if="servicebycat" type="button" ng-click="chooseServWork(servicebycat, se)" class="NoChooseCat" ng-class="se.choose" ng-repeat="se in servicebycat">[[se.service_name]]</button>
+                <br/><br/>
+            </div>
+
+			<div ng-repeat="service in ServicesArr | filter:search" ng-mouseenter="enterSlideShow(service, service.works)" ng-mouseleave="stopSlide(service, service.works)" class="in-body-part-div">
+                <a ng-if="service.salon" href="http://localhost:8000/salons/sal/[[service.salon]]/">
+                    <div class="in-body-part-img-div">
+                        <img ng-if="work" ng-repeat="work in service.works" ng-hide="work.visible" ng-src="[[work.work_logo]]">
+                        <img ng-hide="work" ng-src="[[service.salon_logo]]">
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[service.color]]">
+                        <h3>[[service.name]]</h3>
+                        <p>[[service.service_desc]]</p>
+                        <p>Цена: [[service.service_price]] тг</p>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+                <a ng-if="service.master" href="http://localhost:8000/salons/profile/[[service.master_user]]/#!/master">
+                    <div  class="in-body-part-img-div">
+                        <img ng-repeat="work in service.works" ng-hide="work.visible" ng-src="[[work.work_logo]]">
+                        <img ng-hide="work" ng-src="[[service.avatar]]">
+                    </div>
+                    <div class="in-body-part-desc-div salBg[[service.color]]">
+                        <h3>[[service.name]]</h3>
+                        <p>[[service.service_desc]]</p>
+                        <p>Цена: [[service.service_price]] тг</p>
+                        <button type="button">Посмотреть</button>
+                    </div>
+                </a>
+			</div>
+
+
+

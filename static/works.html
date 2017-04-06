@@ -1,0 +1,76 @@
+
+			<h1>Работы салонов</h1>
+
+            <div ng-repeat="works in WorksArr | filter:search">
+                <div ng-if="work.salon" class="in-body-part-div" ng-repeat="work in works | filter:search">
+                    <a ng-if="work.salon" ng-click="showSalonWork(work.pk, work.name)">
+                        <div class="in-body-part-img-div">
+                            <img ng-src="[[work.work_logo]]">
+                        </div>
+                        <div class="in-body-part-desc-div salBg[[work.color]]">
+                            <h3>[[work.work_desc]]</h3>
+                            <p align="right"> [[work.work_like]] <i class="fa fa-heart fa-1x" aria-hidden="true"></i></p>
+                            <button type="button">Посмотреть</button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+             <div ng-repeat="works in WorksArr | filter:search">
+                 <div  ng-if="work.master" class="in-body-part-div" ng-repeat="work in works | filter:search">
+                    <a ng-if="work.master" ng-click="showSelfWork(work.pk, work.master_user)">
+                        <div class="in-body-part-img-div">
+                            <img ng-src="[[work.work_logo]]">
+                        </div>
+                        <div class="in-body-part-desc-div salBg[[work.color]]">
+                            <h3>[[work.work_desc]]</h3>
+                            <p align="right"> [[work.work_like]] <i class="fa fa-heart fa-1x" aria-hidden="true"></i></p>
+                            <button type="button">Посмотреть</button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+			<div class="workdiv editM" ng-hide="detailShowSalonWork" >
+				<h1 class="add-busy-h1">Работа салона</h1>
+				<div class="add-busy-div">
+                    <div class="img-work-detail">
+						<img ng-src="[[detailWorks.work_logo]]">
+                    </div>
+                    <div class="desc-work-detail">
+                        <a href="http://localhost:8000/salons/sal/[[detailWorks.salon]]">[[detailWorks.name]]</a>
+                        <br/><br/>
+						<p><i style="color:#f00020;" class="fa fa-heart fa-2x" aria-hidden="true"></i> [[detailWorks.work_like]] </p>
+                        <p>[[detailWorks.work_desc]]</p>
+                    </div>
+				</div>
+			</div>
+
+
+			<div ng-hide="detailShowSalonWork" class="backBlack"  ng-click="showSalonWorkHide()">
+			</div>
+
+
+
+			<div class="workdiv editM" ng-hide="detailShowSelfWork" >
+				<h1 class="add-busy-h1">Работа мастера</h1>
+				<div class="add-busy-div">
+
+                    <div class="img-work-detail">
+						<img ng-src="[[detailWorks.work_logo]]">
+                    </div>
+                    <div class="desc-work-detail">
+                        <a href="http://localhost:8000/salons/profile/[[detailWorks.user]]#!/master">Посмотреть профиль мастера</a>
+                        <br/><br/>
+						<p> <i class="fa fa-heart fa-2x" aria-hidden="true"></i> [[detailWorks.work_like]] </p>
+                        <p>[[detailWorks.work_desc]]</p>
+                    </div>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="detailShowSelfWork" class="backBlack"  ng-click="showSelfWorkHide()">
+			</div>
+
+

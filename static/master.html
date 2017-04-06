@@ -1,0 +1,348 @@
+	        <div ng-if="IfModeMaster" class="content-parti-div">
+				<div class="in-content-parti-div">
+					<!--<div class="iconsettings-in-content">-->
+						<!--<i ng-click="editWorkFunc()" class="fa fa-cog fa-2x" aria-hidden="true"></i>-->
+					<!--</div>-->
+					<h2>Работы</h2>
+                    <p ng-repeat="ar in arr">{{ar.name}} {{ar.desc}} {{ar.site}}</p>
+					<div class="in-content-parti-part">
+						<ul class="work-people">
+							<li ng-if="myBusy" style="cursor:pointer;" ng-click="AddWorkFunc()">
+								<br/>
+								<br/>
+								<i class="fa fa-plus-circle fa-5x" aria-hidden="true"></i>
+								<br/>
+								<br/>
+								<h4>Добавить работу</h4>
+							</li>
+							<li ng-if="notMyBusy && nolistworks">
+								<br/>
+								<br/>
+								<i class="fa fa-bell-o fa-4x" aria-hidden="true"></i>
+								<br/>
+								<br/>
+								<p><b>Нет работ</b></p>
+							</li>
+							<!---ng-mouseenter="showdetailwork=true" ng-mouseleave="showdetailwork=false" ng-if="showdetailwork"-->
+							<li ng-repeat="work in listworks">
+								<div ng-if="myBusy" class="div_settings_ang">
+									<i ng-click="editWorkFunc(work.pk, work.work_desc)" class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+									<br/>
+									<i ng-click="deleteWorkFunc(work.pk)" class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+								</div>
+								<div ng-click="showWork(work.pk)" class="divimg">
+									<img ng-src="[[work.work_logo]]">
+								</div>
+								<p>[[work.work_desc]]</p>
+							</li>
+						</ul>
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+			<div ng-if="IfModeMaster" class="content-block-div">
+				<div class="in-content-block-div">
+					<div class="iconsettings-in-content">
+						<i ng-if="myBusy" ng-click="addServicesFunc()" class="fa fa-plus fa-2x" aria-hidden="true"></i>
+					</div>
+					<h2>Услуги</h2>
+					<div class="in-content-block-part">
+						<ul class="content-services-ul">
+							<li ng-repeat="cat in listcat">
+								<div>
+									<h3>[[cat.service_name]]</h3>
+									<ul>
+										<li ng-if="notMyBusy && nolistservices">
+											<br/>
+											<i class="fa fa-bell-o fa-1x" aria-hidden="true"></i>
+											&nbsp;
+											<span>Нет услуг</span>
+										</li>
+										<li ng-repeat="service in listservices" ng-if="service.service==cat.pk">
+
+											[[service.service_desc]] - [[service.service_price]]
+											&nbsp;
+											<i ng-if="myBusy" ng-click="editServiceFunc(service.pk, service.service_desc, service.service_price)" class="fa fa-pencil fa-2x clickable" aria-hidden="true"></i>
+											&nbsp;
+											<i ng-if="myBusy" ng-click="deleteServiceFunc(service.pk)" class="fa fa-trash-o fa-2x clickable" aria-hidden="true"></i>
+										</li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+			<div class="main-add-div editU" ng-hide="IfshowModeMaster" >
+				<h1 class="add-busy-h1">Создать профиль мастера</h1>
+
+				<div class="add-busy-div">
+					<form ng-submit="AddMaster()">
+						<div class="icon_before_input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</div>
+							<input type="text" placeholder="Имя" ng-model="first_name" required>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Фамилия" ng-model="last_name" required></textarea>
+						<div class="icon_before_input">
+							<i class="fa fa-tty" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Email" ng-model="email" required>
+						<div class="icon_before_input">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Номер телефона" ng-model="contact" required>
+						<div class="icon_before_input">
+							<i class="fa fa-window-maximize" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Город" ng-model="city" required>
+
+						<button type="submit">Изменить</button>
+					</form>
+					<p ng-if="success_master" class="success"><i class="fa fa-check" aria-hidden="true"></i> Информация сохранена</p>
+				</div>
+			</div>
+
+
+			<div ng-hide="IfshowModeMaster" class="backBlack"  ng-click="showModeMaster()">
+			</div>
+
+
+
+
+			<div class="main-add-div editU" ng-hide="addwork" >
+				<h1 class="add-busy-h1">Добавить работу</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="upload_work()">
+						<div>
+							<p>Выберите услуги: </p>
+							<button type="button" ng-click="chooseServWork(listservWork, serv)" class="NoChooseCat" ng-class="serv.choose" ng-repeat="serv in listservWork">[[serv.pk]] [[serv.service_name]]</button>
+						</div>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Описание" ng-model="work_desc" required></textarea>
+						<div class="icon_before_input">
+							<i class="fa fa-image" aria-hidden="true"></i>
+						</div>
+						<input type="file" file-input="files" multiple required>
+						<button type="submit">Добавить</button>
+					</form>
+					<p ng-if="success_addwork" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Работа добавлена</p>
+					<p ng-if="error_addwork" class="error"> <i class="fa fa-check" aria-hidden="true"></i> Не верный формат</p>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="addwork" class="backBlack"  ng-click="AddWorkFunc()">
+			</div>
+
+
+
+
+				<div class="main-add-div editM" ng-hide="editWork" >
+				<h1 class="add-busy-h1">Изменить работы</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="upload_edit_work()">
+						<div>
+							<p>Выберите услуги: </p>
+							<button type="button" ng-click="chooseServWork(listservWork, serv)" class="NoChooseCat" ng-class="serv.choose" ng-repeat="serv in listservWork">[[serv.pk]] [[serv.service_name]]</button>
+						</div>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Описание" ng-model="work_desc" required></textarea>
+						<div class="icon_before_input">
+							<i class="fa fa-image" aria-hidden="true"></i>
+						</div>
+						<input type="file" file-input="files" multiple required>
+						<button type="submit">Изменить</button>
+					</form>
+					<p ng-if="success_editwork" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Изменения сохранены</p>
+					<p ng-if="error_editwork" class="error"> <i class="fa fa-check" aria-hidden="true"></i> Не верный формат</p>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editWork" class="backBlack"  ng-click="editWorkFunc()">
+			</div>
+
+
+			<div class="main-add-div editU" ng-hide="deletework" >
+				<h1 class="add-busy-h1">Подтвердите действие</h1>
+
+				<div class="add-busy-div">
+
+					<button  ng-click="deleteWorkFunc()">Отмена</button>
+					<button ng_click="upload_delete_work()">Удалить</button>
+					<p ng-if="success_deletework" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Работа удалена</p>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="deletework" class="backBlack"  ng-click="deleteWorkFunc()">
+			</div>
+
+
+
+
+
+
+
+
+
+
+			<div class="main-add-div editM" ng-hide="addServices" >
+				<h1 class="add-busy-h1">Добавить услугу</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="upload_service([[me_pk]])">
+						<div class="icon_before_input">
+							<i class="fa fa-sitemap" aria-hidden="true"></i>
+						</div>
+						<select ng-options="cat as cat.service_name for cat in listcat track by cat.pk" ng-model="selected" required></select>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<input type="text" ng-model="service_desc" placeholder="Название услуги">
+						<div class="icon_before_input">
+							<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+						</div>
+						<input type="text" ng-model="service_price" placeholder="Стоимость">
+						<button type="submit">Добавить</button>
+					</form>
+					<p ng-if="success_addservice" class="success">Услуга добавлена</p>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="addServices" class="backBlack"  ng-click="addServicesFunc()">
+			</div>
+
+
+
+			<div class="main-add-div editM" ng-hide="editService" >
+				<h1 class="add-busy-h1">Изменить услугу</h1>
+
+				<div class="add-busy-div">
+
+					<form ng-submit="upload_edit_service()">
+						<div class="icon_before_input">
+							<i class="fa fa-sitemap" aria-hidden="true"></i>
+						</div>
+						<select ng-options="cat as cat.service_name for cat in listcat track by cat.pk" ng-model="selected" required></select>
+						<div class="icon_before_input">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+						</div>
+						<input type="text" placeholder="Название услуги" ng-model="service_desc" required>
+						<div class="icon_before_input">
+							<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+						</div>
+						<textarea placeholder="Стоимость услуги" ng-model="service_price" required></textarea>
+						<button type="submit">Изменить</button>
+					</form>
+					<p ng-if="success_editservice" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Изменения сохранены</p>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="editService" class="backBlack"  ng-click="editServiceFunc()">
+			</div>
+
+
+
+
+			<div class="main-add-div editU" ng-hide="deleteservice" >
+				<h1 class="add-busy-h1">Подтвердите действие</h1>
+
+				<div class="add-busy-div">
+
+					<button  ng-click="deleteServiceFunc()">Отмена</button>
+					<button ng_click="upload_delete_service()">Удалить</button>
+					<p ng-if="success_deleteservice" class="success"> <i class="fa fa-check" aria-hidden="true"></i> Услуга удалена</p>
+
+				</div>
+			</div>
+
+
+
+			<div ng-hide="deleteservice" class="backBlack"  ng-click="deleteServiceFunc()">
+			</div>
+
+
+
+
+
+        <div class="main-add-div editM" ng-hide="detailShowWork" >
+				<h1 class="add-busy-h1">Работа мастера</h1>
+				<div class="add-busy-div">
+
+					<div class="img-work-detail">
+						<img ng-src="[[detailWorks.work_logo]]">
+					</div>
+					<div class="desc-work-detail">
+						<p ng-if="isAuth && detailWorks.mataLikeIt" > <i style="color:#f00020;" class="fa fa-heart fa-2x" aria-hidden="true"></i> [[detailWorks.work_like]]</p>
+						<p ng-if="isAuth && detailWorks.mataNotLikeIt" ng-click="addLike(detailWorks.pk, detailWorks.work_like, detailWorks.wholikeit)"> <i class="fa fa-heart fa-2x" aria-hidden="true"></i> [[detailWorks.work_like]]</p>
+						<p ng-if="isNotAuth" ng-click="AuthRegWork()"> <i class="fa fa-heart fa-2x" aria-hidden="true"></i> [[detailWorks.work_like]]</p>
+						<p style="color:black !important;">[[detailWorks.work_desc]]</p>
+					</div>
+
+				</div>
+			</div>
+
+
+			<div ng-hide="detailShowWork" class="backBlack"  ng-click="showWorkHide()">
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

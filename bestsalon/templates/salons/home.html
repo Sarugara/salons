@@ -1,0 +1,259 @@
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+        header{
+			padding: 20px;
+			height:450px;
+			background-image: url("{% static 'img/back3.jpg' %}");
+			background-repeat: no-repeat;
+			background-attachment: cover;
+			background-position: center;
+		}
+    </style>
+</head>
+<body>
+
+	<div class="bar-div">
+		<ul>
+			<li class="m1">Салоны красоты</li>
+			<li class="m3">SPA</li>
+			<li class="m2">Клиники</li>
+		</ul>
+	</div>
+<header>
+	<div>
+		<div class="part-header">
+			<p>Город: Алматы</p>
+		</div>
+		<div class="part-header">
+			<img src="{% static 'img/vide-logo-white-min2.png' %}">
+		</div>
+		<div class="part-header">
+
+{% block auth %}
+    {%if user.username %}
+        <a href="{% url 'salons:profile' user.pk %}">{{ user.username }}</a>
+        <a href="{% url 'salons:logout' %}">Выйти</a>
+    {% else %}
+        <a href="{% url 'salons:login' %}">Войти</a>
+    {% endif %}
+{% endblock %}
+		</div>
+
+		<div class="main">
+			<h1>Лучшие салоны красоты</h1>
+		</div>
+	</div>
+	<!-- <div class="search-div">
+		<input type="text">
+	</div> -->
+
+</header>
+<div class="content-div-two">
+</div>
+<div class="content-div">
+	<h2>Лучшие салоны красоты</h2>
+    {% block salons %}
+    {% if all_salons %}
+            {% for salon in all_salons %}
+			<a href="{% url 'salons:detail' salon.id %}">
+            	<div class="part-content">
+                    <div class="part-content-img">
+                        <img src="{{ salon.salon_logo.url }}">
+                    </div>
+                    <div class="part-content-desc">
+                        <h3>{{ salon.salon_name }}</h3>
+                        <p>{{ salon.salon_desc }}</p>
+                    </div>
+                </div>
+			</a>
+            {% endfor %}
+    {% else %}
+        <h2>List is empty</h2>
+    {% endif %}
+{% endblock %}
+
+
+	<div class="part-content">
+		<div class="part-content-img">
+			<img src="back2.jpg">
+		</div>
+		<div class="part-content-desc">
+			<h3>Invergio - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-content">
+		<div class="part-content-img">
+			<img src="back3.jpg">
+		</div>
+		<div class="part-content-desc">
+			<h3>Minapo - салоны красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+		<div class="part-content">
+		<div class="part-content-img">
+			<img src="back.jpg">
+		</div>
+		<div class="part-content-desc">
+			<h3>A7 - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-content">
+		<div class="part-content-img">
+			<img src="back2.jpg">
+		</div>
+		<div class="part-content-desc">
+			<h3>Invergio - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-content">
+		<div class="part-content-img">
+			<img src="back3.jpg">
+		</div>
+		<div class="part-content-desc">
+			<h3>Minapo - салоны красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+</div>
+<div class="content-div-two">
+</div>
+
+
+
+
+
+
+
+
+
+<div class="clear"></div>
+
+
+
+
+
+
+<div class="service-div">
+	<h2>Услуги</h2>
+	<div class="part-service">
+		<div class="part-service-img">
+			<img src="back.jpg">
+		</div>
+		<div class="part-service-desc">
+			<h3>A7 - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-service">
+		<div class="part-service-img">
+			<img src="back2.jpg">
+		</div>
+		<div class="part-service-desc">
+			<h3>Invergio - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-service">
+		<div class="part-service-img">
+			<img src="back3.jpg">
+		</div>
+		<div class="part-service-desc">
+			<h3>Minapo - салоны красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+		<div class="part-service">
+		<div class="part-service-img">
+			<img src="back.jpg">
+		</div>
+		<div class="part-service-desc">
+			<h3>A7 - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-service">
+		<div class="part-service-img">
+			<img src="back2.jpg">
+		</div>
+		<div class="part-service-desc">
+			<h3>Invergio - Сеть салонов красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+	<div class="part-service">
+		<div class="part-service-img">
+			<img src="back3.jpg">
+		</div>
+		<div class="part-service-desc">
+			<h3>Minapo - салоны красоты</h3>
+			<p>Салон красоты в Алматы, лучшие мастера, отличное помещение, новое оборудование, уровень сервиса на высшем уровне. Профессиональные мастера, готовые выполнить работу именно так как надо.</p>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<footer>
+
+	<div class="part-footer">
+		<h4>Партнерам</h4>
+		<ul>
+			<li>О компании</li>
+			<li>Как это работает</li>
+			<li>Для вашего бизнеса</li>
+			<li>Соглашение</li>
+			<li>Реклама на сайте</li>
+		</ul>
+	</div>
+	<div class="part-footer">
+		<h4>Для пользователей</h4>
+		<ul>
+			<li>Личный кабинет</li>
+			<li>Оставить отзыв</li>
+			<li>Добавить заведение</li>
+			<li>Соглашение</li>
+		</ul>
+	</div>
+	<div class="part-footer">
+		<h4>Следи за лучшими</h4>
+		<ul>
+			<li>Instagram</li>
+			<li>Facebook</li>
+		</ul>
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="site-settings">
+	<p>© 2017 Vide.kz</p>
+	</div>
+
+</footer>
+
+
+
+
+
+
+</body>
+
+
+</html>
